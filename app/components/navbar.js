@@ -6,29 +6,38 @@ import { FaShoppingCart, FaUser, FaHeart, FaProductHunt } from 'react-icons/fa';
 
 const Navbar = () => {
   return (
-    <nav className="flex justify-between bg-gray-800 p-4 text-white">
-      <div className="flex items-center">
+    <nav className="flex justify-between bg-white p-5 text-black px-16 border-b-2 border-black">
+      <div className="flex space-x-5 items-center">
+      <h1 className={` text-4xl`}>
+        StoreFront
+        </h1>
+
         <Link href="/products">
           {/* <a className="flex items-center"> */}
-          Products
-
+          MEN
+          {/* </a>/ */}
+        </Link>
+        <Link href="/products">
+          {/* <a className="flex items-center"> */}
+          WOMEN
           {/* </a>/ */}
         </Link>
       </div>
-      <div className="flex items-center space-x-5">
+      {/* Icons */}
+      <div className="flex items-center space-x-12 ">
         <Link href="/cart">
           {/* <a className="flex items-center mr-4"> */}
-            <FaShoppingCart className="mr-2" /> 
+            <FaShoppingCart className="mr-2" size={24} /> 
           {/* </a> */}
         </Link>
         <Link href="/account">
           {/* <a className="flex items-center mr-4"> */}
-            <FaUser className="mr-2" /> 
+            <FaUser className="mr-2" size={24} /> 
           {/* </a> */}
         </Link>
         <Link href="/favorites">
           {/* <a className="flex items-center"> */}
-            <FaHeart className="mr-2" /> 
+            <FaHeart className="mr-2"size={24} /> 
           {/* </a> */}
         </Link>
       </div>
