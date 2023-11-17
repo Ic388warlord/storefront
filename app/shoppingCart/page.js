@@ -14,8 +14,6 @@ function ShoppingCart() {
 
     const [items, setItems] = useState(null)
     const shoppingCart = new Cart();
-    const url = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/list"
-
     useEffect(() => {
         const fetchProducts = async () => {
             try {
