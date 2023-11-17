@@ -2,19 +2,45 @@
 import React from 'react'
 import Link from 'next/link';
 import Image from 'next/image';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
+import ShoppingCartCard from '../components/shoppingCartCard';
+import Product from '../models/productModel'
 
 
 function ShoppingCart() {
 
-    const [items, setItems] = useState()
-    console.log(items)
+    const [items, setItems] = useState(null)
+    const url = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product"
 
+    useEffect(() => {
+        const getData = async() => {
+            const query = await fetch('/dummyItems.json')
+            const data = await query.json()
+
+            const products = data.map(item => new Product(
+                item.product_id,
+                item.product_category,
+                item.product_description,
+                item.product_images,
+                item.product_name,
+                item.product_price
+            ));
+            setItems(products);
+            console.log(products)
+        }
+        getData()
+
+      }, []);
+      
+      
+
+
+    
 
     // TODO write a function that grabs the stuff
   return (
-    
+
     <div className='p-10'>
         {/* Route */}
         <p className="route uppercase text-sm">
@@ -25,60 +51,20 @@ function ShoppingCart() {
 
         {/* 2 Columns */}
         <section className='flex justify-between'>
-             {/* Items */}
-            <section className="w-2/3">
-                {/* Per Item Picture + Product details*/}
-                <article className='shadow-lg h-[250px] flex '>
-                    {/* Picture */}
-                    <div className='w-1/2'>
-                        {/* Responsive scales */}
-                        <Image 
-                            src="/teamFour.jpeg" 
-                            alt="Descriptive text for the image" 
-                            width={300} 
-                            height={500}
-                            layout='responsive'
-
-                        />
-                    </div>
-                    {/* Proudct Details */}
-                    <div className='px-3 flex-1 flex flex-col justify-between tracking-wide'>
-                        <div>
-                        {/* title and close button*/}
-                        <div className='flex justify-between items-end'>
-                            <p className="bold text-lg uppercase">Memories</p> 
-                            <button>
-                                <FaTimes/>
-
-                            </button> 
-                        </div>
-
-                        <div>
-                            <p className='text-gray-500'>Product ID: </p>
-                            <p className="">Color: </p>
-                            <p className="">Size: </p>
-
-                        </div>
-
-                        </div>
 
 
+        <section className='w-full'>
+        {items && items.map((product,index) => {
+            
+            return <ShoppingCartCard product={product} key={index}/>
+        })}
 
-                        <p className='text-red-500'>CAD 19.90 </p>
-                        {/* <p>Quantity</p> */}
-
-                    </div>
+        </section>
 
 
 
 
-                </article>
-
-
-
-            </section>
-
-
+        
             {/* Total Box */}
             <section className="w-1/3 m-3">
                     {/* Price Box */}
