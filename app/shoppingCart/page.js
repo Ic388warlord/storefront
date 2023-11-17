@@ -15,6 +15,7 @@ function ShoppingCart() {
     const [items, setItems] = useState(null)
     const [loading, isLoading] = useState(false)
     const shoppingCart = new Cart();
+    
     useEffect(() => {
         const fetchProducts = async () => {
             isLoading(true)
@@ -56,20 +57,20 @@ function ShoppingCart() {
 
 
         <section className='w-full'>
-  {loading ? (
-    // Render loading state if loading is true
-    <p>Loading...</p>
-  ) : items ? (
-    // Render items if loading is false and items is truthy
-    items.map((product, index) => {
-      shoppingCart.add(product);
-      return <ShoppingCartCard product={product} onRemove={removeItem} key={index}/>
-    })
-  ) : (
-    // Render a message (or nothing) if loading is false and items is falsy
-    <p>No products found.</p>
-  )}
-</section>
+            {loading ? (
+                // Render loading state if loading is true
+                <p>Loading...</p>
+            ) : items ? (
+                // Render items if loading is false and items is truthy
+                items.map((product, index) => {
+                shoppingCart.add(product);
+                return <ShoppingCartCard product={product} onRemove={removeItem} key={index}/>
+                })
+            ) : (
+                // Render a message (or nothing) if loading is false and items is falsy
+                <p>No products found.</p>
+            )}
+        </section>
 
 
 
