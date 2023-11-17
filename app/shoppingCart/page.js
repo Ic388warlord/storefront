@@ -6,16 +6,18 @@ import { useState, useEffect } from 'react';
 import { FaTimes } from 'react-icons/fa';
 import ShoppingCartCard from '../components/shoppingCartCard';
 import Product from '../models/productModel'
+import Cart from '../models/shoppingCart';
 
 
 function ShoppingCart() {
 
     const [items, setItems] = useState(null)
+    const shoppingCart = new Cart();
     const url = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product"
 
     useEffect(() => {
         const getData = async() => {
-            const query = await fetch('/dummyItems.json')
+            const query = await fetch('/dummyItems.json') // Change
             const data = await query.json()
 
             const products = data.map(item => new Product(
@@ -26,13 +28,18 @@ function ShoppingCart() {
                 item.product_name,
                 item.product_price
             ));
+
             setItems(products);
-            console.log(products)
         }
         getData()
 
       }, []);
       
+      const removeItem = productId => {
+        // Update the items state
+        setItems(currentItems => currentItems.filter(item => item.product_id !== productId));
+        shoppingCart.remove(productId);
+    };
       
 
 
@@ -40,7 +47,6 @@ function ShoppingCart() {
 
     // TODO write a function that grabs the stuff
   return (
-
     <div className='p-10'>
         {/* Route */}
         <p className="route uppercase text-sm">
@@ -55,8 +61,8 @@ function ShoppingCart() {
 
         <section className='w-full'>
         {items && items.map((product,index) => {
-            
-            return <ShoppingCartCard product={product} key={index}/>
+            shoppingCart.add(product);
+            return <ShoppingCartCard product={product} onRemove={removeItem} key={index}/>
         })}
 
         </section>
