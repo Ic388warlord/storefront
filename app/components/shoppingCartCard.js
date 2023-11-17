@@ -1,11 +1,10 @@
 'use client'
-import React from 'react'
+import React, { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import Image from 'next/image'
 
 
-const ShoppingCartCard = ({product}) => {
-    // console.log(product);
+const ShoppingCartCard = ({product, onRemove}) => {
 
 
     return(
@@ -36,7 +35,7 @@ const ShoppingCartCard = ({product}) => {
                         {/* title and close button*/}
                         <div className='flex justify-between items-end'>
                             <p className="bold text-lg uppercase">{product.product_name}</p> 
-                            <button>
+                            <button onClick={() => onRemove(product.product_id)}>
                                 <FaTimes/>
 
                             </button> 
@@ -58,10 +57,6 @@ const ShoppingCartCard = ({product}) => {
                         {/* <p>Quantity</p> */}
 
                     </div>
-
-
-
-
                 </article>
 
 
