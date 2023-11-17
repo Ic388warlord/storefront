@@ -5,8 +5,6 @@ import Image from 'next/image'
 
 
 const ShoppingCartCard = ({product, onRemove}) => {
-
-
     return(
             <section className="w-full my-5">
                 {/* Per Item Picture + Product details*/}

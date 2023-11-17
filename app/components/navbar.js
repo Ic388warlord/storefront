@@ -30,7 +30,7 @@ const Navbar = () => {
             <FaShoppingCart className="mr-2" size={24} /> 
           {/* </a> */}
         </Link>
-        <Link href="/account">
+        <Link href="/profile">
           {/* <a className="flex items-center mr-4"> */}
             <FaUser className="mr-2" size={24} /> 
           {/* </a> */}
