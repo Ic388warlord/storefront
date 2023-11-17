@@ -17,6 +17,14 @@ class Cart {
         this.items.push(...products);
     }
 
+    subTotal() {
+        return this.items.reduce((total, item) => total + item.price, 0);
+    }
+
+    tax() {
+        return this.subTotal() * 0.13;
+    }
+
     // Optional: Method to display all items in the cart
     listItems() {
         return this.items;

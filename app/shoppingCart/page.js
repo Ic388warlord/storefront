@@ -7,35 +7,29 @@ import { FaTimes } from 'react-icons/fa';
 import ShoppingCartCard from '../components/shoppingCartCard';
 import Product from '../models/productModel'
 import Cart from '../models/shoppingCart';
+import API from '../utils/api';
 
 
 function ShoppingCart() {
 
     const [items, setItems] = useState(null)
     const shoppingCart = new Cart();
-    const url = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product"
+    const url = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/list"
 
     useEffect(() => {
-        const getData = async() => {
-            const query = await fetch('/dummyItems.json') // Change
-            const data = await query.json()
-
-            const products = data.map(item => new Product(
-                item.product_id,
-                item.product_category,
-                item.product_description,
-                item.product_images,
-                item.product_name,
-                item.product_price
-            ));
-
-            setItems(products);
-        }
-        getData()
-
-      }, []);
+        const fetchProducts = async () => {
+            try {
+                const products = await API.getProducts();
+                setItems(products);
+            } catch (error) {
+                // Handle any errors here, such as setting an error state or logging
+                console.error("Failed to fetch products:", error);
+            }
+        };
+        fetchProducts();
+    }, []);
       
-      const removeItem = productId => {
+    const removeItem = productId => {
         // Update the items state
         setItems(currentItems => currentItems.filter(item => item.product_id !== productId));
         shoppingCart.remove(productId);
