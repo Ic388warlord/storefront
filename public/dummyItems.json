@@ -1,0 +1,58 @@
+[
+    {
+      "product_id": "123e4567-e89b-12d3-a456-426614174000",
+      "product_category": "Electronics",
+      "product_description": "A state-of-the-art smartphone with the latest features.",
+      "product_images": [
+        "image1.jpg",
+        "image2.jpg"
+      ],
+      "product_name": "Smartphone X",
+      "product_price": 999.99
+    },
+    {
+      "product_id": "123e4567-e89b-12d3-a456-426614174001",
+      "product_category": "Home Appliances",
+      "product_description": "An energy-efficient washing machine with a large capacity.",
+      "product_images": [
+        "image3.jpg",
+        "image4.jpg"
+      ],
+      "product_name": "SuperWash 3000",
+      "product_price": 499.99
+    },
+    {
+      "product_id": "123e4567-e89b-12d3-a456-426614174002",
+      "product_category": "Books",
+      "product_description": "An engaging novel by a bestselling author.",
+      "product_images": [
+        "image5.jpg",
+        "image6.jpg"
+      ],
+      "product_name": "The Great Adventure",
+      "product_price": 19.99
+    },
+    {
+      "product_id": "123e4567-e89b-12d3-a456-426614174003",
+      "product_category": "Fashion",
+      "product_description": "Comfortable and stylish running shoes for everyday wear.",
+      "product_images": [
+        "image7.jpg",
+        "image8.jpg"
+      ],
+      "product_name": "RunFast Shoes",
+      "product_price": 89.99
+    },
+    {
+      "product_id": "123e4567-e89b-12d3-a456-426614174004",
+      "product_category": "Gaming",
+      "product_description": "Next-gen gaming console with 8K support and VR ready.",
+      "product_images": [
+        "image9.jpg",
+        "image10.jpg"
+      ],
+      "product_name": "GameMaster Pro",
+      "product_price": 559.99
+    }
+  ]
+  
