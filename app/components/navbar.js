@@ -25,7 +25,7 @@ const Navbar = () => {
       </div>
       {/* Icons */}
       <div className="flex items-center space-x-12 ">
-        <Link href="/cart">
+        <Link href="/shoppingCart">
           {/* <a className="flex items-center mr-4"> */}
             <FaShoppingCart className="mr-2" size={24} /> 
           {/* </a> */}
