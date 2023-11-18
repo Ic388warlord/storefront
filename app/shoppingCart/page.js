@@ -79,29 +79,30 @@ function ShoppingCart() {
         
             {/* Total Box */}
             <section className="w-1/3 m-3">
+                
                     {/* Price Box */}
                     <div className="flex flex-col gap-3 justify-evenly border shadow-md w-full h-[300px] p-5">
                         {/* Todo Add logic here */}
-                        <div className="text-lg font-bold uppercase">Order summary| x items</div>
+                        <div className="text-lg font-bold uppercase">Order summary| {shoppingCart.length()} items</div>
                         {/* Item Subtotal */}
                         <div className="flex justify-between">
                             <p>Item Subtotal</p>
-                            <p>CAD $x</p>
+                            <p>CAD ${items && shoppingCart.subTotal().toFixed(2)}</p>
                         </div>
                         {/* Subtotal */}
                         <div className="flex font-bold my-2 text-lg uppercase justify-between">
                             <p>Subtotal</p>
-                            <p>CAD $x</p>
+                            <p>CAD ${items && shoppingCart.subTotal().toFixed(2)}</p>
                         </div>
                         {/* Tax */}
                         <div className="flex justify-between">
                             <p>Estimated Tax</p>
-                            <p>CAD $0.0</p>
+                            <p>CAD ${items && shoppingCart.tax().toFixed(2)}</p>
                         </div>
                         {/* Order Total */}
                         <div className="flex font-bold my-2 uppercase justify-between">
                             <p>Order Total</p>
-                            <p>CAD $x</p>
+                            <p>CAD ${items && shoppingCart.total().toFixed(2)}</p>
                         </div>
                     </div>
 

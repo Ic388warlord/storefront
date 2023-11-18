@@ -18,11 +18,20 @@ class Cart {
     }
 
     subTotal() {
-        return this.items.reduce((total, item) => total + item.price, 0);
+        console.log(this.items)
+        return this.items.reduce((total, item) => total + item.product_price, 0);
     }
 
     tax() {
         return this.subTotal() * 0.13;
+    }
+
+    total() {
+        return this.subTotal() + this.tax();
+    }
+
+    length() {
+        return this.items.length;
     }
 
     // Optional: Method to display all items in the cart

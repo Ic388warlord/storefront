@@ -49,6 +49,30 @@ class API {
         return product
 
     }
+
+    static async logout() {
+        console.log(cookies.get('token'))
+        if (cookies.get('token') == 'undefined') {
+            localStorage.removeItem('username')
+            return;
+        }
+        const payload = {
+            "Authorization": `Bearer ${auth}`
+        }
+        const response  = await fetch("https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signout", {
+            headers: payload
+        })
+        const data = await response;
+        if (response.ok) {
+            cookies.remove('token')
+            localStorage.removeItem('username')
+            router.push('/profile/login')
+        } else {
+            alert("Log out failed?")
+        }
+    }
+    
+
 }
 
 export default API;

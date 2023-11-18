@@ -2,14 +2,14 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { useAuth } from '../auth';
+import { useAuth } from '../utils/auth';
 import Cookies from 'universal-cookie';
 const Profile = () => {
     const router = useRouter()
-    const {auth, username, setAuth} = useAuth()
+    const {auth, setAuth} = useAuth()
     const cookies = new Cookies();
 
-    if (cookies.get('token') == 'undefined') {
+    if (cookies.get('token') == 'undefined' || localStorage.getItem('username') == null) {
         console.log(cookies.get('token'))
         router.push('/profile/login')
     }
@@ -19,6 +19,9 @@ const Profile = () => {
 
     const logout = async () => {
         console.log(cookies.get('token'))
+        localStorage.removeItem('username')
+
+
         if (cookies.get('token') == 'undefined') {
             localStorage.removeItem('username')
             return;
@@ -29,6 +32,7 @@ const Profile = () => {
         const response  = await fetch("https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signout", {
             headers: payload
         })
+        
         const data = await response;
         if (response.ok) {
             cookies.remove('token')
@@ -37,8 +41,6 @@ const Profile = () => {
         } else {
             alert("Log out failed?")
         }
-
-
     }
 
 
