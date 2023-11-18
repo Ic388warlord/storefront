@@ -5,6 +5,7 @@ import Image from 'next/image'
 
 
 const ShoppingCartCard = ({product, onRemove}) => {
+    console.log(product)
     return(
             <section className="w-full my-5">
                 {/* Per Item Picture + Product details*/}
@@ -15,7 +16,7 @@ const ShoppingCartCard = ({product, onRemove}) => {
 
                     <div className='relative w-full h-full'>
                     <Image 
-                            src="/teamFour.jpeg" 
+                            src={product.product_images[0]} 
                             alt="Descriptive text for the image" 
                             // width={450}
                             // height={300}
