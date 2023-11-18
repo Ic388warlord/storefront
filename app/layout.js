@@ -3,6 +3,7 @@ import './globals.css'
 import Navbar from './components/navbar'
 import Title from './components/title'
 import { Lato } from 'next/font/google'
+import ChatBot from './components/chatbot'
 
 
 const inter = Inter({ subsets: ['latin'] })
@@ -22,6 +23,7 @@ export default function RootLayout({ children }) {
         {/* <Title /> */}
         <Navbar />
         {children}
+        <ChatBot/>
         </body>
     </html>
   )
