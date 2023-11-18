@@ -72,11 +72,6 @@ function ShoppingCart() {
             )}
         </section>
 
-
-
-
-
-        
             {/* Total Box */}
             <section className="w-1/3 m-3">
                 
@@ -117,17 +112,7 @@ function ShoppingCart() {
                         Continue Shopping
                     </div>
             </section>
-
-
-
-
-
-
-
         </section>
-
-
-
     </div>
   )
 }
