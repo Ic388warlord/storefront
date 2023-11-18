@@ -9,9 +9,11 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "jquery": "^3.7.1",
     "next": "14.0.1",
-    "react": "^18",
-    "react-dom": "^18",
+    "owl.carousel": "^2.3.4",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
     "react-icons": "^4.11.0",
     "universal-cookie": "^6.1.1"
   },
