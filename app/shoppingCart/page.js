@@ -8,9 +8,12 @@ import ShoppingCartCard from '../components/shoppingCartCard';
 import Product from '../models/productModel'
 import Cart from '../models/shoppingCart';
 import API from '../utils/api';
+import { useRouter } from 'next/navigation';
+
 
 
 function ShoppingCart() {
+    const router = useRouter()
 
     const [items, setItems] = useState(null)
     const [loading, isLoading] = useState(false)
@@ -39,6 +42,13 @@ function ShoppingCart() {
         setItems(currentItems => currentItems.filter(item => item.product_id !== productId));
         shoppingCart.remove(productId);
     };
+
+    const handleCheckout = () => {
+        router.push('shoppingCart/checkout')
+    }
+    const handleContinueShopping = () => {
+        router.push('/products')
+    }
     
       
 
@@ -108,12 +118,12 @@ function ShoppingCart() {
                     <p className='p-3 mt-3'>
                         Your items will only be available for the next 60 seconds! Get them fast before they go to the next person!
                     </p>
-                    <div className='w-full p-3 my-5 uppercase text-lg text-center bg-red-600 text-white'>
+                    <button className='w-full p-3 my-5 uppercase text-lg text-center bg-red-600 text-white' onClick={handleCheckout}>
                         Check out
-                    </div>
-                    <div className='w-full p-3 my-5 uppercase text-lg text-center border-2'>
+                    </button>
+                    <button className='w-full p-3 my-5 uppercase text-lg text-center border-2' onClick={handleContinueShopping}>
                         Continue Shopping
-                    </div>
+                    </button>
             </section>
         </section>
     </div>
