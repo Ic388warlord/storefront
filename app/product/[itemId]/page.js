@@ -27,8 +27,8 @@ function Product({params}) {
     checkIsFavorite();
   }, [params.itemId]);
 
-  const addToCart = () => {
-    
+  const addToCart = async () => {
+    await API.postShoppingCart("kris.test@gmail.com", params.itemId)
   };
   
   

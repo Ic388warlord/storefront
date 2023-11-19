@@ -2,7 +2,8 @@ import Product from "../models/productModel";
 
 class API {
     static listAllProductsUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/list"
-    static userShoppingListUrl = " https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/" // Requires two api calls
+    static userShoppingListUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/" // Requires two api calls
+    static userShoppingCartAddUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/addItem"
     static prouductUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/"
     static favouriteUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/favorite/"
     static dummyProductUrl = "/dummyItems.json"
@@ -19,7 +20,6 @@ class API {
             item.product_price
         ));
         return products
-
     }
 
     static async getShoppingCart(email) {
@@ -53,6 +53,35 @@ class API {
             products.push(product); 
         }
         return products;
+    }
+
+    static async postShoppingCart(email, id) {
+        const payload = {
+            "user_email": email,
+            "product_id": id
+        }
+        await fetch(this.userShoppingCartAddUrl, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+    }
+
+    static async postFavorites(operation, email, id) {
+        const payload = {
+            "operation": operation,
+            "email": email,
+            "product_id": id
+        }
+        await fetch(this.favouriteUrl, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
     }
 
     static async getDummyProduct() {
