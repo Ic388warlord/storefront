@@ -44,50 +44,46 @@ function Product({params}) {
   }, []);
 
   return (
-    <div className="bg-gray-100 p-8 h-screen">
-          <p className="route uppercase mb-16 text-sm">
-            <Link href="/">Storefront</Link> / {product.product_category } / {product.product_name}
-        </p>
-      <div className="max-w-screen-xl mx-auto w-4/5">
+    <div className="bg-gray-100 p-5 h-screen">
+      <div className="max-w-screen-xl mx-auto mt-5">
         {/* Image Slider */}
         {product && (
-          <div className="flex ">
+          <div className="flex">
             {/* Thumbnails */}
-            <div className='w-1/3'>
-            <div className="flex flex-col w-full h-full space-y-4 pr-8 ">
+            <div className='w-1/5'>
+            <div className="flex flex-col w-full h-full space-y-4 pr-8 mt-20">
               {product.product_images.map((thumbnail, index) => (
                 <Image
                   key={index}
                   src={thumbnail}
                   alt={`Thumbnail ${index + 1}`}
                   width={200}
-                  height={200}
-                  className="cursor-pointer w-45 h-16 object-cover"
+                  height={400}
+                  className="cursor-pointer w-45 h-50 object-cover"
                   onClick={() => changeImage(thumbnail)}
                 />
               ))}
             </div>
-
             </div>
-
   
             {/* Large Image */}
-            <div className="flex-grow w-full">
-              <div className="w-full h-96 overflow-hidden">
+            <div className="flex-grow h-full w-4/5 mt-20">
+              <div className="w-90 h-96 overflow-hidden">
                 <img
                   src={product.product_images[0]}
                   alt="Large Image"
                   id="largeImage"
-                  className="w-full h-full object-cover"
+                  style={{ width: '100%', height: '100%', objectFit: 'cover' }}
                 />
               </div>
             </div>
   
             {/* Product Details */}
-            <div className="flex-grow-0 ml-10 w-2/3"> {/* Added margin to the left */}
+            <div className="flex-grow-0 ml-10 w-4/5"> {/* Added margin to the left */}
               <div className="flex flex-col">
                 <p className="text-sm text-gray-700">{product.product_category}</p>
                 <h1 className="text-3xl font-bold">{product.product_name}</h1>
+                <br/>
                 <p className="text-md text-gray-700">{product.product_description}</p>
                 <br />
                 <p className="text-2xl font-bold text-green-700">${product.product_price}</p>
