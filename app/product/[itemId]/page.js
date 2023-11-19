@@ -3,12 +3,14 @@ import React from 'react'
 import { FaShoppingCart, FaHeart, FaMoneyCheck} from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import API from '../../utils/api';
+import Image from 'next/image';
 
 function Product({params}) {
   const [product, setProduct] = useState(null)
 
   const addToCart = () => {
     // Add your API call logic for adding the item to the cart here
+
     console.log('Adding to cart...');
   };
 
@@ -29,8 +31,8 @@ function Product({params}) {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        // const product = await API.getProductById(params.itemId); //Uncomment when finished
-        const product = await API.getDummyProduct()
+        const product = await API.getProductById(params.itemId); //Uncomment when finished
+        // const product = await API.getDummyProduct()
         setProduct(product);
       } catch (error) {
         // Handle any errors here, such as setting an error state or logging
@@ -41,26 +43,32 @@ function Product({params}) {
   }, []);
 
   return (
-    <div className="bg-gray-100 p-8">
-      <div className="max-w-screen-xl mx-auto">
+    <div className="bg-gray-100 p-8 h-screen">
+      <div className="max-w-screen-xl mx-auto w-3/4">
         {/* Image Slider */}
         {product && (
-          <div className="flex">
+          <div className="flex ">
             {/* Thumbnails */}
-            <div className="flex flex-col space-y-4 pr-8">
+            <div className='w-1/3'>
+            <div className="flex flex-col w-full h-full space-y-4 pr-8 ">
               {product.product_images.map((thumbnail, index) => (
-                <img
+                <Image
                   key={index}
                   src={thumbnail}
                   alt={`Thumbnail ${index + 1}`}
+                  width={200}
+                  height={200}
                   className="cursor-pointer w-45 h-16 object-cover"
                   onClick={() => changeImage(thumbnail)}
                 />
               ))}
             </div>
+
+            </div>
+
   
             {/* Large Image */}
-            <div className="flex-grow">
+            <div className="flex-grow w-full">
               <div className="w-full h-96 overflow-hidden">
                 <img
                   src={product.product_images[0]}
@@ -72,25 +80,25 @@ function Product({params}) {
             </div>
   
             {/* Product Details */}
-            <div className="flex-grow-0 ml-10"> {/* Added margin to the left */}
+            <div className="flex-grow-0 ml-10 w-2/3"> {/* Added margin to the left */}
               <div className="flex flex-col">
                 <p className="text-sm text-gray-700">{product.product_category}</p>
                 <h1 className="text-3xl font-bold">{product.product_name}</h1>
-                <p className="text-lg text-gray-700">{product.product_description}</p>
+                <p className="text-md text-gray-700">{product.product_description}</p>
                 <br />
                 <p className="text-2xl font-bold text-green-700">${product.product_price}</p>
   
                 {/* Buttons */}
                 <div className="mt-10 space-y-2 flex flex-col">
                   <button
-                    className="bg-black text-white px-6 py-2 rounded flex items-center justify-center hover:bg-gray-300 hover:text-black"
+                    className="bg-black  text-white px-6 py-2 rounded flex items-center justify-center hover:bg-gray-300 hover:text-black"
                     onClick={addToCart}
                   >
                     <FaShoppingCart className="mr-2" size={24} />
                     <span>Add to Cart</span>
                   </button>
                   <button
-                    className="bg-red-600 text-white border-2 px-6 py-2 rounded flex items-center justify-center hover:bg-gray-300 hover:text-red-600"
+                    className="bg-red-600  text-white border-2 px-6 py-2 rounded flex items-center justify-center hover:bg-gray-300 hover:text-red-600"
                     onClick={saveToFavourites}
                   >
                     <FaHeart className="mr-2" size={24} />
