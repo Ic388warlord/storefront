@@ -11,8 +11,7 @@ class Cart {
     remove(productId) {
         this.items = this.items.filter(item => item.id !== productId);
     }
-
-
+ 
     addAll(products) {
         this.items.push(...products);
     }

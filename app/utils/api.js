@@ -2,6 +2,7 @@ import Product from "../models/productModel";
 
 class API {
     static listAllProductsUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/list"
+    static userShoppingListUrl = " https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/" // Requires two api calls
     static prouductUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/"
     static dummyProductUrl = "/dummyItems.json"
 
@@ -18,6 +19,39 @@ class API {
         ));
         return products
 
+    }
+
+    static async getShoppingCart(email) {
+        const products = []
+        const payload = {
+            "user_email": email
+        }
+        const query = await fetch(this.userShoppingListUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        const data = await query.json()
+
+        const productsEmail = data.body
+        console.log(data)
+        for (const element of productsEmail) {
+            const productid = element.product_id;
+            const query2 = await fetch(this.prouductUrl + productid); 
+            const productData = await query2.json(); 
+            const product = new Product(
+                productData.body.product_id,
+                productData.body.product_category,
+                productData.body.product_description,
+                productData.body.product_images,
+                productData.body.product_name,
+                productData.body.product_price
+            )
+            products.push(product); 
+        }
+        return products;
     }
 
     static async getDummyProduct() {
