@@ -5,23 +5,65 @@ import { useState, useEffect } from 'react';
 import API from '../../utils/api';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useRouter } from 'next/navigation';
 
 function Product({params}) {
   const [product, setProduct] = useState(null)
+  const [isFavorite, setIsFavorite] = useState(false);
+  const router = useRouter()
+
+  useEffect(() => {
+    const checkIsFavorite = async () => {
+      try {
+        const favoritesData = await API.getFavorites("april.sh.cheng@gmail.com");
+        const favoriteIds = Array.isArray(favoritesData.body) ? favoritesData.body : [];
+        const isItemFavorite = favoriteIds.includes(params.itemId);
+        setIsFavorite(isItemFavorite);
+      } catch (error) {
+        console.error("Error checking favorite status:", error);
+      }
+    };
+
+    checkIsFavorite();
+  }, [params.itemId]);
 
   const addToCart = () => {
-    // Add your API call logic for adding the item to the cart here
-    console.log('Adding to cart...');
+    
   };
-
-  const saveToFavourites = () => {
-    // Redirect the user to the purchase page
-    router.push('/purchase');
+  
+  
+  const FavoriteButton = () => {
+    const toggleFavorite = async () => {
+      try {
+        if (isFavorite) {
+          await API.postFavorites("remove", "april.sh.cheng@gmail.com", params.itemId);
+        } else {
+          await API.postFavorites("add", "april.sh.cheng@gmail.com", params.itemId);
+        }
+  
+        // Toggle isFavorite status after the API call
+        setIsFavorite((prevIsFavorite) => !prevIsFavorite);
+      } catch (error) {
+        console.error("Error checking and toggling favorite:", error);
+      }
+    };
+  
+    return (
+      <button
+        id="favoriteButton"
+        className={`bg-${isFavorite ? 'gray-500':'red-600'} text-white border-2 px-6 py-2 rounded flex items-center justify-center hover:bg-gray-300 hover:text-${isFavorite ? 'red-600' : 'gray-500'}`}
+        onClick={toggleFavorite}
+      >
+        <FaHeart className="mr-2" size={24} />
+        <span id="favoriteButtonText">
+          {isFavorite ? 'Remove from Favorites' : 'Save To Favorites'}
+        </span>
+      </button>
+    );
   };
 
   const checkOut = () => {
-    // Redirect the user to the purchase page
-    router.push('/purchase');
+    router.push('/shoppingCart/checkout');
   };
 
   const changeImage = (imagePath) => {
@@ -31,11 +73,9 @@ function Product({params}) {
   useEffect(() => {
     const fetchProduct = async () => {
       try {
-        const product = await API.getProductById(params.itemId); //Uncomment when finished
-        // const product = await API.getDummyProduct()
+        const product = await API.getProductById(params.itemId); 
         setProduct(product);
       } catch (error) {
-        // Handle any errors here, such as setting an error state or logging
         console.error("Failed to fetch product:", error);
       }
     };
@@ -99,13 +139,7 @@ function Product({params}) {
                     <FaShoppingCart className="mr-2" size={24} />
                     <span>Add to Cart</span>
                   </button>
-                  <button
-                    className="bg-red-600  text-white border-2 px-6 py-2 rounded flex items-center justify-center hover:bg-gray-300 hover:text-red-600"
-                    onClick={saveToFavourites}
-                  >
-                    <FaHeart className="mr-2" size={24} />
-                    <span>Save To Favorites</span>
-                  </button>
+                  <FavoriteButton/>
                   <button
                     className="bg-blue-600 text-white border-2 px-6 py-2 rounded flex items-center justify-center hover:bg-gray-300 hover:text-blue-600"
                     onClick={checkOut}

@@ -4,6 +4,7 @@ class API {
     static listAllProductsUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/list"
     static userShoppingListUrl = " https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/" // Requires two api calls
     static prouductUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/"
+    static favouriteUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/favorite/"
     static dummyProductUrl = "/dummyItems.json"
 
     static async getProducts() {
@@ -81,9 +82,34 @@ class API {
             data.body.product_price
         );
         return product
-
     }
 
+    static async postFavorites(operation, email, id) {
+        const payload = {
+            "operation": operation,
+            "email": email,
+            "product_id": id
+        }
+        await fetch(this.favouriteUrl, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+    }
+
+    static async getFavorites(email) {
+        try {
+            const response = await fetch(this.favouriteUrl + email);
+            const data = await response.json();
+            return data;
+        } catch (error) {
+            console.error("Error fetching favorites:", error);
+            throw error;
+        }
+    }
+      
     static async logout() {
         console.log(cookies.get('token'))
         if (cookies.get('token') == 'undefined') {
