@@ -2,6 +2,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import API from "../utils/api";
+import Link from "next/link";
 
 const GridContainer = styled.div`
   display: grid;
@@ -18,7 +19,7 @@ const LeftMenu = styled.div`
 `;
 
 const ProductDetail = styled.div`
-  grid-column: span 12; /* Span the entire width of the container */
+  grid-column: span 2; /* Span the entire width of the container */
   grid-row: span auto; /* Let it span as many rows as needed */
   background-color: #ffffff;
   display: grid;
@@ -97,30 +98,23 @@ const Product = () => {
       </LeftMenu>
 
       {/* ProductDetail */}
-      <ProductDetail>
-        <h1
-          style={{ fontSize: "32px", fontWeight: "bold", marginBottom: "20px" }}
-        ></h1>
-        {loading ? (
-          <p>Loading...</p>
-        ) : products && products.length > 0 ? (
-          <div>
-            {products.map((product, index) => (
-              <div key={index}>
+      {loading ? (
+        <p>Loading...</p>
+      ) : products && products.length > 0 ? (
+        <div style={{ display: "flex", flexWrap: "wrap" }}>
+          {products.map((product, index) => (
+            <Link key={index} href={`/product/${product.product_id}`}>
+              <ProductDetail>
                 <h1>{product.product_name}</h1>
-                <img
-                  src={product.product_images[0]}
-                  alt={product.product_name}
-                ></img>
-                {/* <p>{product.product_description}</p>
-                <p>Category: {product.product_category}</p> */}
-              </div>
-            ))}
-          </div>
-        ) : (
-          <p>No products found.</p>
-        )}
-      </ProductDetail>
+                <img src={product.product_images[0]} alt={product.product_name} />
+                {/* Additional product details */}
+              </ProductDetail>
+            </Link>
+          ))}
+        </div>
+      ) : (
+        <p>No products found.</p>
+      )}
     </GridContainer>
   );
 };
