@@ -4,6 +4,7 @@ import { FaShoppingCart, FaHeart, FaMoneyCheck} from 'react-icons/fa';
 import { useState, useEffect } from 'react';
 import API from '../../utils/api';
 import Image from 'next/image';
+import Link from 'next/link';
 
 function Product({params}) {
   const [product, setProduct] = useState(null)
@@ -44,7 +45,10 @@ function Product({params}) {
 
   return (
     <div className="bg-gray-100 p-8 h-screen">
-      <div className="max-w-screen-xl mx-auto w-3/4">
+          <p className="route uppercase mb-16 text-sm">
+            <Link href="/">Storefront</Link> / {product.product_category } / {product.product_name}
+        </p>
+      <div className="max-w-screen-xl mx-auto w-4/5">
         {/* Image Slider */}
         {product && (
           <div className="flex ">

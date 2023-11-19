@@ -2,10 +2,10 @@
 import React, { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
 import Image from 'next/image'
+import Link from 'next/link'
 
 
 const ShoppingCartCard = ({product, onRemove}) => {
-    console.log(product)
     return(
             <section className="w-full my-5">
                 {/* Per Item Picture + Product details*/}
@@ -15,7 +15,8 @@ const ShoppingCartCard = ({product, onRemove}) => {
                         {/* Responsive scales */}
 
                     <div className='relative w-full h-full'>
-                    <Image 
+                        <Link href={'/product/' + product.product_id}>
+                        <Image 
                             src={product.product_images[0]} 
                             alt="Descriptive text for the image" 
                             // width={450}
@@ -24,6 +25,10 @@ const ShoppingCartCard = ({product, onRemove}) => {
                             objectFit='contain'
 
                         />
+
+                        </Link>
+
+                 
                     </div>
                     </div>
 
