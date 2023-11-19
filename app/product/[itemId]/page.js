@@ -11,7 +11,6 @@ function Product({params}) {
 
   const addToCart = () => {
     // Add your API call logic for adding the item to the cart here
-
     console.log('Adding to cart...');
   };
 
@@ -45,7 +44,10 @@ function Product({params}) {
 
   return (
     <div className="bg-gray-100 p-5 h-screen">
-      <div className="max-w-screen-xl mx-auto mt-5">
+      <p className="route uppercase mb-5 text-sm">
+        <Link href="/">Storefront</Link> / {product?.product_category || 'Category'} / {product?.product_name || 'Product Name'}
+      </p>
+      <div className="max-w-screen-xl mx-auto">
         {/* Image Slider */}
         {product && (
           <div className="flex">
