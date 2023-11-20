@@ -1,16 +1,11 @@
 'use client';
 import React from 'react'
 import Link from 'next/link';
-import Image from 'next/image';
 import { useState, useEffect } from 'react';
-import { FaTimes } from 'react-icons/fa';
 import ShoppingCartCard from '../components/shoppingCartCard';
-import Product from '../models/productModel'
 import Cart from '../models/shoppingCart';
 import API from '../utils/api';
 import { useRouter } from 'next/navigation';
-
-
 
 function ShoppingCart() {
     const router = useRouter()

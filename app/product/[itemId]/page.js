@@ -31,7 +31,6 @@ function Product({params}) {
     await API.postShoppingCart("kris.test@gmail.com", params.itemId)
   };
   
-  
   const FavoriteButton = () => {
     const toggleFavorite = async () => {
       try {
