@@ -50,7 +50,7 @@ function Product({params}) {
     return (
       <button
         id="favoriteButton"
-        className={`bg-${isFavorite ? 'gray-500':'red-600'} text-white border-2 px-6 py-2 rounded flex items-center justify-center hover:bg-gray-300 hover:text-${isFavorite ? 'red-600' : 'gray-500'}`}
+        className={`bg-red-600 text-white border-2 px-6 py-2 rounded flex items-center justify-center hover:bg-gray-300 hover:text-black`}
         onClick={toggleFavorite}
       >
         <FaHeart className="mr-2" size={24} />
