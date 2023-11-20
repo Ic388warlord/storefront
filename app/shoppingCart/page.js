@@ -7,6 +7,9 @@ import Product from '../models/productModel'
 import Cart from '../models/cart';
 import API from '../utils/api';
 import { useRouter } from 'next/navigation';
+import Cookies from 'universal-cookie';
+
+
 
 function ShoppingCart() {
     const router = useRouter()
@@ -14,6 +17,7 @@ function ShoppingCart() {
     const [loading, isLoading] = useState(false)
     const shoppingCart = new Cart();
     const [email, setEmail] = useState(null);
+    const cookies = new Cookies();
     // Check if running on the client side
     if (typeof window !== 'undefined') {
         // Use localStorage and cookies here

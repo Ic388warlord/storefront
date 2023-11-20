@@ -3,9 +3,11 @@ import { FaHeart, FaShoppingCart } from 'react-icons/fa';
 import Image from 'next/image';
 import Link from 'next/link';
 import API from '../utils/api';
+import Cookies from 'universal-cookie';
 
 const FavoriteCard = ({ product, onRemove }) => {
-    
+    const cookies = new Cookies();
+
     const [email, setEmail] = useState(null);
     // Check if running on the client side
     if (typeof window !== 'undefined') {

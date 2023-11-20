@@ -1,4 +1,5 @@
 import Product from "../models/productModel";
+import Cookies from "universal-cookie";
 
 class API {
     static listAllProductsUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/list"

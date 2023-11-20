@@ -3,12 +3,15 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import API from '../utils/api';
 import FavoriteCard from '../components/favoriteCard';
+import Cookies from 'universal-cookie';
 
 function Favourites() {
   const [items, setItems] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [email, setEmail] = useState(null);
+  const cookies = new Cookies();
+
   // Check if running on the client side
   if (typeof window !== 'undefined') {
       // Use localStorage and cookies here
