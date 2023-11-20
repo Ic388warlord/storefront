@@ -50,7 +50,7 @@ const [activeSlide, setActiveSlide] = useState(0);
     <div className={`absolute top-2/3 left-20  z-40 text-white ${lato.className}`}>
             <p className="text-5xl my-3 tracking-widest">One Size Fits all</p>
             <p className="text-lg tracking-widest">It's simple. You fit, or you don't.</p>
-            <a href="#" className="inline-block mt-3 px-6 py-3 border border-white border-opacity-50 text-white rounded-md text-lg hover:bg-white hover:text-black transition duration-300">
+            <a href="/products" className="inline-block mt-3 px-6 py-3 border border-white border-opacity-50 text-white rounded-md text-lg hover:bg-white hover:text-black transition duration-300">
           View Products
     </a>
             
