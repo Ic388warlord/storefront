@@ -8,7 +8,7 @@ function Favourites() {
   const [items, setItems] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const userEmail = "april.sh.cheng@gmail.com";
+  const email = localStorage.getItem("username")
 
   useEffect(() => {
     const fetchFavorites = async () => {
@@ -16,7 +16,7 @@ function Favourites() {
         setLoading(true);
 
         // Fetch favorite item IDs
-        const favoritesData = await API.getFavorites(userEmail);
+        const favoritesData = await API.getFavorites(email);
         const favoriteIds = Array.isArray(favoritesData.body) ? favoritesData.body : [];
 
         // Fetch product details for each favorite item

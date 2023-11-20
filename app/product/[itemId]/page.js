@@ -11,11 +11,12 @@ function Product({params}) {
   const [product, setProduct] = useState(null)
   const [isFavorite, setIsFavorite] = useState(false);
   const router = useRouter()
+  const email = localStorage.getItem("username")
 
   useEffect(() => {
     const checkIsFavorite = async () => {
       try {
-        const favoritesData = await API.getFavorites("april.sh.cheng@gmail.com");
+        const favoritesData = await API.getFavorites(email);
         const favoriteIds = Array.isArray(favoritesData.body) ? favoritesData.body : [];
         const isItemFavorite = favoriteIds.includes(params.itemId);
         setIsFavorite(isItemFavorite);
@@ -28,16 +29,16 @@ function Product({params}) {
   }, [params.itemId]);
 
   const addToCart = async () => {
-    await API.postShoppingCart("kris.test@gmail.com", params.itemId)
+    await API.postShoppingCart(email, params.itemId)
   };
   
   const FavoriteButton = () => {
     const toggleFavorite = async () => {
       try {
         if (isFavorite) {
-          await API.postFavorites("remove", "april.sh.cheng@gmail.com", params.itemId);
+          await API.postFavorites("remove", email, params.itemId);
         } else {
-          await API.postFavorites("add", "april.sh.cheng@gmail.com", params.itemId);
+          await API.postFavorites("add", email, params.itemId);
         }
   
         // Toggle isFavorite status after the API call

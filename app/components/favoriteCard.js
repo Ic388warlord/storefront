@@ -5,9 +5,10 @@ import Link from 'next/link';
 import API from '../utils/api';
 
 const FavoriteCard = ({ product, onRemove }) => {
+    const email = localStorage.getItem("username")
 
     const addToCart = async () => {
-        await API.postShoppingCart("kris.test@gmail.com", product.product_id)
+        await API.postShoppingCart(email, product.product_id)
       };
     
     return (
