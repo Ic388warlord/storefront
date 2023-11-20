@@ -1,4 +1,6 @@
 // Add API calls into this 
+import API from '../utils/api';
+
 class Cart {
     constructor(items = []) {
         this.items = items;
@@ -9,7 +11,9 @@ class Cart {
     }
 
     remove(productId) {
+        API.removeFromShoppingcart(localStorage.getItem('username'), productId);
         this.items = this.items.filter(item => item.id !== productId);
+
     }
  
     addAll(products) {

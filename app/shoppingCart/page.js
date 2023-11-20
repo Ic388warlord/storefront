@@ -21,7 +21,6 @@ function ShoppingCart() {
             try {
                 // const products = await API.getShoppingCart(localStorage.getItem('username'));
                 const products = await API.getShoppingCart(localStorage.getItem('kris.test@gmail.com'));
-
                 setItems(products);
                 isLoading(false)
             } catch (error) {
