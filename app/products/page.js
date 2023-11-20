@@ -105,8 +105,9 @@ const Product = () => {
           {products.map((product, index) => (
             <Link key={index} href={`/product/${product.product_id}`}>
               <ProductDetail>
-                <h1>{product.product_name}</h1>
                 <img src={product.product_images[0]} alt={product.product_name} />
+                <h1>{product.product_name}</h1>
+                <p>{product.product_price}</p>
                 {/* Additional product details */}
               </ProductDetail>
             </Link>
