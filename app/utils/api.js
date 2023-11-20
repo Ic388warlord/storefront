@@ -6,6 +6,7 @@ class API {
     static userShoppingCartAddUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/addItem"
     static prouductUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/"
     static favouriteUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/favorite/"
+    static chatboxUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/chatbot/chat"
     static dummyProductUrl = "/dummyItems.json"
 
     static async getProducts() {
@@ -20,6 +21,26 @@ class API {
             item.product_price
         ));
         return products
+    }
+
+    static async chatBox(message) {
+        const payload = {
+            "text": message
+        }
+
+        const query = await fetch(this.chatboxUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+
+        const data = await query.json()
+
+        console.log(data.lexResponse)
+
+        return data.lexResponse;
     }
 
     static async getShoppingCart(email) {
