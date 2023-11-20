@@ -5,7 +5,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 
 
-const ShoppingCartCard = ({product, onRemove}) => {
+const ShoppingCartCard = ({product, onRemove, count}) => {
     return(
             <section className="w-full my-5">
                 {/* Per Item Picture + Product details*/}
@@ -49,7 +49,7 @@ const ShoppingCartCard = ({product, onRemove}) => {
                             <p className='text-gray-500'>Product ID: {product.product_id} </p>
                             <p className="">Category: {product.product_category} </p>
                             <p className="">Color: Gray </p>
-                            <p className=""></p>
+                            <p className="">{count}</p>
 
                         </div>
 

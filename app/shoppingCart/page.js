@@ -33,9 +33,10 @@ function ShoppingCart() {
         fetchProducts();
     }, []);
       
-    const removeItem = productId => {
+    const removeItem = async productId => {
         // Update the items state
         setItems(currentItems => currentItems.filter(item => item.product_id !== productId));
+        await API.removeFromShoppingcart(localStorage.getItem('username'), productId);
         shoppingCart.remove(productId);
     };
 
@@ -69,7 +70,7 @@ function ShoppingCart() {
                 // Render items if loading is false and items is truthy
                 items.map((product, index) => {
                     shoppingCart.add(product);
-                    return <ShoppingCartCard product={product} onRemove={removeItem} key={index}/>
+                    return <ShoppingCartCard product={product} onRemove={removeItem} key={index} count={1} />
                 })
             ) : (
                 // Render a message (or nothing) if loading is false and items is falsy

@@ -76,6 +76,21 @@ class API {
         return products;
     }
 
+    static async removeFromShoppingcart(email, id ) {
+        const payload = {
+            "user_email": email,
+            "product_id": id
+        }
+        await fetch(this.userShoppingCartAddUrl, {
+            method: 'DELETE',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+
+    }
+
     static async postShoppingCart(email, id) {
         const payload = {
             "user_email": email,
