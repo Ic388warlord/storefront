@@ -79,11 +79,11 @@ const Product = () => {
           {categories.map((category, index) => (
             <li
               key={index}
-              className="m-2 flex"
+              className="m-2 flex uppercase"
               onClick={() => handleCategoryClick(index)}
               style={{ cursor: "pointer", marginBottom: "10px" }}
             >
-              {category.name}
+              {category.name} {" >"}
               {expandedCategories.includes(index) && (
                 <ul style={{ marginLeft: "20px", padding: 0 }}>
                   {category.subcategories.map((subCategory, subIndex) => (
