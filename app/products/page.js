@@ -105,10 +105,10 @@ const Product = () => {
       {loading ? (
         <p className="flex justify-center items-center">Loading...</p>
       ) : products && products.length > 0 ? (
-        <ProductDetail className="grid grid-cols-3 col-span-2">
+        <ProductDetail className="grid grid-cols-4 m-5 col-span-2">
           {products.map((product, index) => (
             <Link key={index} href={`/product/${product.product_id}`}>
-              <div className="flex flex-col my-2 w-[200px] shadow-md overflow-hidden p-2">
+              <div className="flex flex-col m-3 w-[200px] shadow-md overflow-hidden p-2">
                     <div className="w-full h-[200px] relative"> {/* Set a relative position on the container and to encapuslate the image */}
                     <Image
                       src={product.product_images[0]}
