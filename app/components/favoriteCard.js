@@ -5,13 +5,25 @@ import Link from 'next/link';
 import API from '../utils/api';
 
 const FavoriteCard = ({ product, onRemove }) => {
-    const email = localStorage.getItem("username")
+    
+    const [email, setEmail] = useState(null);
+    // Check if running on the client side
+    if (typeof window !== 'undefined') {
+        // Use localStorage and cookies here
+        if (cookies.get('token') === 'undefined' || localStorage.getItem('username') === null) {
+            setEmail(localStorage.getItem('username'));
+            console.log(cookies.get('token'));
+            router.push('/profile/login');
+        }
+    }
+
 
     const addToCart = async () => {
         await API.postShoppingCart(email, product.product_id)
       };
     
     return (
+
         <section className="grid"> {/* Updated width classes */}
         {/* Per Item Picture + Product details */}
         <article className="shadow-lg flex"> {/* Removed height class */}

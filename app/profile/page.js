@@ -11,17 +11,18 @@ const Profile = () => {
     const router = useRouter();
     const { auth, setAuth } = useAuth();
     const cookies = new Cookies();
-    const email = localStorage.getItem('username');
-
+    
+    
+    const [email, setEmail] = useState(null);
     // Check if running on the client side
     if (typeof window !== 'undefined') {
         // Use localStorage and cookies here
         if (cookies.get('token') === 'undefined' || localStorage.getItem('username') === null) {
+            setEmail(localStorage.getItem('username'));
             console.log(cookies.get('token'));
             router.push('/profile/login');
         }
     }
-
 
     // Logout function
     const logout = async () => {
@@ -62,7 +63,7 @@ const Profile = () => {
                     <h1 className="text-5xl mb-5 uppercase">Profile</h1>
                     {auth ? (
                         <div>
-                            <div className="font-bold text-xl mb-2">{localStorage.getItem("username")}</div>
+                            <div className="font-bold text-xl mb-2">{email}</div>
                             <button className="bg-transparent hover:bg-red-500 font-bold py-2 px-4 rounded-full border uppercase">
                                 View Your Purchase History
                             </button>
