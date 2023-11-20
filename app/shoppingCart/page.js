@@ -44,11 +44,7 @@ function ShoppingCart() {
     const handleContinueShopping = () => {
         router.push('/products')
     }
-    
       
-
-
-    
 
     // TODO write a function that grabs the stuff
   return (
