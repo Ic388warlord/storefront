@@ -2,24 +2,24 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components";
 import API from "../utils/api";
+import Image from "next/image";
 import Link from "next/link";
 
 const GridContainer = styled.div`
   display: grid;
-  grid-template-columns: repeat(12, 1fr);
-  grid-template-rows: repeat(12, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   gap: 10px;
   height: 100vh;
 `;
 
 const LeftMenu = styled.div`
-  grid-column: span 3;
+  grid-column: span 1;
   grid-row: span 12;
   background-color: #f0f0f0;
 `;
 
 const ProductDetail = styled.div`
-  grid-column: span 2; /* Span the entire width of the container */
+  grid-column: span 3; /* Span the entire width of the container */
   grid-row: span auto; /* Let it span as many rows as needed */
   background-color: #ffffff;
   display: grid;
@@ -51,9 +51,10 @@ const Product = () => {
     const fetchProduct = async () => {
       // isLoading(true);
       try {
+        isLoading(true);
         const productsData = await API.getProducts();
         setProduct(productsData);
-        // isLoading(false);
+        isLoading(false);
       } catch (error) {
         console.error("Failed to fetch product:", error);
         // isLoading(false);
@@ -68,6 +69,8 @@ const Product = () => {
       {/* Sidebar */}
       <LeftMenu>
         <h2
+          className="justify-center m-2 flex uppercase tracking-wide"
+
           style={{ fontSize: "32px", fontWeight: "bold", marginBottom: "20px" }}
         >
           Categories
@@ -76,10 +79,11 @@ const Product = () => {
           {categories.map((category, index) => (
             <li
               key={index}
+              className="m-2 flex uppercase"
               onClick={() => handleCategoryClick(index)}
               style={{ cursor: "pointer", marginBottom: "10px" }}
             >
-              {category.name}
+              {category.name} {" >"}
               {expandedCategories.includes(index) && (
                 <ul style={{ marginLeft: "20px", padding: 0 }}>
                   {category.subcategories.map((subCategory, subIndex) => (
@@ -99,20 +103,31 @@ const Product = () => {
 
       {/* ProductDetail */}
       {loading ? (
-        <p>Loading...</p>
+        <p className="flex justify-center items-center">Loading...</p>
       ) : products && products.length > 0 ? (
-        <div style={{ display: "flex", flexWrap: "wrap" }}>
+        <ProductDetail className="grid grid-cols-4 m-5 col-span-2">
           {products.map((product, index) => (
             <Link key={index} href={`/product/${product.product_id}`}>
-              <ProductDetail>
-                <img src={product.product_images[0]} alt={product.product_name} />
-                <h1>{product.product_name}</h1>
-                <p>$ {product.product_price}</p>
+              <div className="flex flex-col m-3 w-[200px] shadow-md overflow-hidden p-2">
+                    <div className="w-full h-[200px] relative"> {/* Set a relative position on the container and to encapuslate the image */}
+                    <Image
+                      src={product.product_images[0]}
+                      layout="fill" // Make the image fill the container
+                      objectFit="cover" // Cover the area, might crop the image
+                      alt={product.product_name}
+                    />
+                  </div>
+                  <p className="text-sm text-gray-500 text-end">One Size</p>               
+                  <div className="min-h-[3rem]"> {/* Set a minimum height to ensure consistency. This container makes the hieght consistent */}
+                  <h1 className="text-md tracking-wide uppercase whitespace-normal overflow-hidden">{product.product_name}</h1>
+                  </div>
+                  <p className="text-sm text-gray-500">{product.product_category}</p>
+                <p>CAD $ {product.product_price}</p>
                 {/* Additional product details */}
-              </ProductDetail>
+              </div>
             </Link>
           ))}
-        </div>
+        </ProductDetail>
       ) : (
         <p>No products found.</p>
       )}

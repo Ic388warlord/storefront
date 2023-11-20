@@ -3,7 +3,8 @@ import React from 'react'
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import ShoppingCartCard from '../components/shoppingCartCard';
-import Cart from '../models/shoppingCart';
+import Product from '../models/productModel'
+import Cart from '../models/cart';
 import API from '../utils/api';
 import { useRouter } from 'next/navigation';
 
