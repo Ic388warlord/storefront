@@ -10,9 +10,9 @@ import { useRouter } from 'next/navigation';
 
 function ShoppingCart() {
     const router = useRouter()
-
     const [items, setItems] = useState(null)
     const [loading, isLoading] = useState(false)
+    const email = localStorage.getItem("username")
     const shoppingCart = new Cart();
     
     useEffect(() => {
@@ -20,7 +20,7 @@ function ShoppingCart() {
             isLoading(true)
             try {
                 // const products = await API.getShoppingCart(localStorage.getItem('username'));
-                const products = await API.getShoppingCart(localStorage.getItem('kris.test@gmail.com'));
+                const products = await API.getShoppingCart(email);
 
                 setItems(products);
                 isLoading(false)
