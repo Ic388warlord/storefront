@@ -8,8 +8,16 @@ function Favourites() {
   const [items, setItems] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const email = localStorage.getItem("username")
-
+  const [email, setEmail] = useState(null);
+  // Check if running on the client side
+  if (typeof window !== 'undefined') {
+      // Use localStorage and cookies here
+      if (cookies.get('token') === 'undefined' || localStorage.getItem('username') === null) {
+          setEmail(localStorage.getItem('username'));
+          console.log(cookies.get('token'));
+          router.push('/profile/login');
+      }
+  }
   useEffect(() => {
     const fetchFavorites = async () => {
       try {
