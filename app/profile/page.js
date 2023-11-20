@@ -67,7 +67,7 @@ const Profile = () => {
                         </div>
                     ) : (
                         <div>
-                            <p>You are not logged in!</p>
+                            <p>You are now logged in!</p>
                         </div>
                     )}
                 </div>
