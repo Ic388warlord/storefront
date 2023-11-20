@@ -107,7 +107,7 @@ const Product = () => {
               <ProductDetail>
                 <img src={product.product_images[0]} alt={product.product_name} />
                 <h1>{product.product_name}</h1>
-                <p>{product.product_price}</p>
+                <p>$ {product.product_price}</p>
                 {/* Additional product details */}
               </ProductDetail>
             </Link>
