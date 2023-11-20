@@ -11,6 +11,7 @@ const Profile = () => {
     const router = useRouter();
     const { auth, setAuth } = useAuth();
     const cookies = new Cookies();
+    const email = localStorage.getItem('username');
 
     // Check if running on the client side
     if (typeof window !== 'undefined') {
@@ -20,6 +21,7 @@ const Profile = () => {
             router.push('/profile/login');
         }
     }
+
 
     // Logout function
     const logout = async () => {
@@ -58,7 +60,7 @@ const Profile = () => {
             <div className="border border-gray-300 shadow-lg rounded-lg p-6 max-w-sm w-full text-center">
                 <div className="mb-4">
                     <h1 className="text-5xl mb-5 uppercase">Profile</h1>
-                    {auth ? (
+                    {email ? (
                         <div>
                             <div className="font-bold text-xl mb-2">{localStorage.getItem("username")}</div>
                             <button className="bg-transparent hover:bg-red-500 font-bold py-2 px-4 rounded-full border uppercase">
