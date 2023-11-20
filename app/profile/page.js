@@ -60,7 +60,7 @@ const Profile = () => {
             <div className="border border-gray-300 shadow-lg rounded-lg p-6 max-w-sm w-full text-center">
                 <div className="mb-4">
                     <h1 className="text-5xl mb-5 uppercase">Profile</h1>
-                    {email ? (
+                    {auth ? (
                         <div>
                             <div className="font-bold text-xl mb-2">{localStorage.getItem("username")}</div>
                             <button className="bg-transparent hover:bg-red-500 font-bold py-2 px-4 rounded-full border uppercase">
