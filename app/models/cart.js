@@ -11,7 +11,6 @@ class Cart {
     }
 
     remove(productId) {
-        API.removeFromShoppingcart(localStorage.getItem('username'), productId);
         this.items = this.items.filter(item => item.id !== productId);
 
     }
