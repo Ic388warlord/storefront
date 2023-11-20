@@ -41,7 +41,7 @@ function Favourites() {
 
   const removeFavorite = async (productId) => {
     try {
-      await API.postFavorites("remove", userEmail, productId);
+      await API.postFavorites("remove", email, productId);
       setItems((prevItems) => prevItems.filter((item) => item.product_id !== productId));
     } catch (error) {
       console.error("Error removing favorite:", error);
