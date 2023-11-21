@@ -1,14 +1,35 @@
 'use client';
 
 import Link from 'next/link';
-import { FaShoppingCart, FaUser, FaHeart, FaProductHunt } from 'react-icons/fa';
+import { FaShoppingCart, FaUser, FaHeart, FaProductHunt, FaStop, FaTimes, FaSearch } from 'react-icons/fa';
 import { useAuth } from '../utils/auth';
+import { useState } from 'react';
+import { useRouter } from 'next/navigation';
 
 const Navbar = (props) => {
+  const [search, setSearch] = useState(true);
+  const [item, setItem] = useState();
+  const router = useRouter();
+
 
   return (
     <nav className="flex justify-between bg-white p-5 text-black px-16 border-b-2 border-black">
-      <div className="flex space-x-5 items-center">
+      {search ? (
+        <div className='flex flex-grow justify-end'>
+          <div className="flex flex-grow space-x-5 items-center">
+            <input className="flex-grow p-3 border" type="text" placeholder="Search By Keyword" onChange={(e) => setItem(e.target.value)}/>
+            <button className="p-2" onClick={() => setSearch(false)}>
+              <FaTimes className="mr-2" size={24} />
+            </button>
+            <Link className="p-2" href={`/search/${item}`}>
+              <FaSearch className="mr-2" size={24} />
+            </Link>
+          </div>
+        </div>
+
+      ) : (
+        <>
+        <div className="flex space-x-5 items-center">
       <h1 className={` text-4xl`}>
         <Link href={'/'}>
         StoreFront
@@ -28,6 +49,9 @@ const Navbar = (props) => {
       </div>
       {/* Icons */}
       <div className="flex items-center space-x-12 ">
+        <button className="p-2" onClick={() => setSearch(true)}>
+            <FaSearch className="mr-2" size={24} />
+        </button>
         <Link href="/shoppingCart">
           {/* <a className="flex items-center mr-4"> */}
             <FaShoppingCart className="mr-2" size={24} /> 
@@ -44,6 +68,9 @@ const Navbar = (props) => {
           {/* </a> */}
         </Link>
       </div>
+      </>
+      )}
+      
     </nav>
   );
 };

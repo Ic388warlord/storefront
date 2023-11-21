@@ -10,10 +10,10 @@ const ChatBot = () => {
     const [messages, setMessages] = useState([]);
 
     const handleSendButton = async () => {
+        setText('');
         setMessages(messages => [...messages, { text: text, from: 'user' }]);
         const data = await API.chatBox(text);
         setMessages(messages => [...messages, { text: data, from: 'bot' }]);
-        setText('');
     }
 
 
