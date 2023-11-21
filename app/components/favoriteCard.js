@@ -6,22 +6,9 @@ import API from '../utils/api';
 import Cookies from 'universal-cookie';
 
 const FavoriteCard = ({ product, onRemove }) => {
-    const cookies = new Cookies();
-
-    const [email, setEmail] = useState(null);
-    // Check if running on the client side
-    if (typeof window !== 'undefined') {
-        // Use localStorage and cookies here
-        if (cookies.get('token') === 'undefined' || localStorage.getItem('username') === null) {
-            setEmail(localStorage.getItem('username'));
-            console.log(cookies.get('token'));
-            router.push('/profile/login');
-        }
-    }
-
 
     const addToCart = async () => {
-        await API.postShoppingCart(email, product.product_id)
+        await API.postShoppingCart(product.product_id)
       };
     
     return (

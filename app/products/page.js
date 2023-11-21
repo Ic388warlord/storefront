@@ -112,8 +112,8 @@ const Product = () => {
                     <div className="w-full h-[200px] relative"> {/* Set a relative position on the container and to encapuslate the image */}
                     <Image
                       src={product.product_images[0]}
-                      layout="fill" // Make the image fill the container
-                      objectFit="cover" // Cover the area, might crop the image
+                      fill={true}
+                      sizes="(max-width: 768px) 100vw, 33vw"
                       alt={product.product_name}
                     />
                   </div>

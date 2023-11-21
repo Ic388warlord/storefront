@@ -1,49 +1,32 @@
 'use client'
-import { useAuth } from '@/app/utils/auth';
 import { useRouter } from 'next/navigation';
 import { Router } from 'next/router';
-
-
-import { React, useState } from 'react';
+import API from '@/app/utils/api';
+import { useAuth } from '@/app/utils/auth';
+import { React, useContext, useState } from 'react';
 
 const Profile = () => {
     const router = useRouter()
-
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
+    const [message, setMessage] = useState(null);
+    const { auth, email, login, logout } = useAuth();
+
 
     const handleSubmit = async (event) => {
-        console.log(username, password)
         event.preventDefault();
-        login(username, password)
-
+        console.log(username, password)
+        // Token gets admitted in here
+        const data = await API.login(username, password)
+        if (data.statusCode === 200) {
+            /// Putting it in the useAuth Hook but doesn't persist State. FML
+            // login(data.token, data.email);
+            router.push('/profile')
+        } else {
+            setMessage(data.message)
+        }
     };
 
-
-
-    const login = async (username, password) => {
-        const payload = {
-            "email": username,
-            "password": password
-        }
-        const response = await fetch('https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signin', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify(payload)
-        })
-        const data = await response.json();
-        
-        if (response.ok) {
-            document.cookie = 'token=' + data.token
-            localStorage.setItem('username', username)
-            router.push('/profile')
-
-        } else {
-            alert("login Failed!")
-        }
-    }
 
     return (
         <div className="flex justify-center items-center h-screen">
@@ -56,7 +39,7 @@ const Profile = () => {
                             value={username}
                             onChange={(e) => setUsername(e.target.value)}
                             placeholder="Username"
-                            className="w-full px-3 py-2 mb-3 text-gray-700 border rounded"
+                            className="w-full px-3 py-2 mb-3  text-gray-700 border rounded"
                         />
                         <input
                             type="password"
@@ -69,6 +52,7 @@ const Profile = () => {
                     <button type="submit" className="bg-transparent hover:bg-red-500 text-red-700 hover:text-white font-bold py-2 px-4 rounded-full border border-red-500 uppercase">
                         Login
                     </button>
+                    {message && <p className="text-slate-500">{message}</p>}
                 </form>
             </div>
         </div>

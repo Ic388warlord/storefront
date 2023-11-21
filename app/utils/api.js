@@ -1,5 +1,5 @@
 import Product from "../models/productModel";
-import Cookies from "universal-cookie";
+import Cookies from "js-cookie";
 
 class API {
     static listAllProductsUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/list"
@@ -8,7 +8,22 @@ class API {
     static prouductUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/"
     static favouriteUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/favorite/"
     static chatboxUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/chatbot/chat"
+    static loginUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signin"
+    static logoutUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signout"
+    static meUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/me"
     static dummyProductUrl = "/dummyItems.json"
+
+    static clearCookies() {
+        Cookies.remove('token')
+        Cookies.remove('email')
+    }
+
+    static getToken() {
+        return Cookies.get('token')
+    }
+    static getEmail() {
+        return Cookies.get('email')
+    }
 
     static async getProducts() {
         const query = await fetch(this.listAllProductsUrl) // Change
@@ -22,6 +37,56 @@ class API {
             item.product_price
         ));
         return products
+    }
+    static async getEmail() {
+        const query = await fetch(this.meUrl, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${Cookies.get('token')}`
+            },
+        })
+        const data = await query.json()
+        console.log(data);
+        return data;
+
+    }
+
+
+    static async login (username, password) {
+        const payload = {
+            "email": username,
+            "password": password
+        }
+        const response = await fetch(this.loginUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        })
+        const data = await response.json();
+        console.log("From API " + data.token);
+        Cookies.set('token', data.token, { path: '/' });
+        Cookies.set('email', data.email, { path: '/' });
+
+        return data;
+    }
+
+    static async logOut () {
+        const auth = Cookies.get('token');
+        const payload = {
+            "Authorization": `Bearer ${auth}`,
+            'Content-Type': 'application/json'
+        };
+        const response = await fetch(this.logoutUrl, {
+            method: 'GET',
+            headers: payload
+        })
+        const data = await response.json();
+        console.log(data);
+        return data;
+
     }
 
     static async chatBox(message) {
@@ -44,7 +109,8 @@ class API {
         return data.lexResponse;
     }
 
-    static async getShoppingCart(email) {
+    static async getShoppingCart() {
+        const email = Cookies.get('email')
         const products = []
         const payload = {
             "user_email": email
@@ -77,7 +143,8 @@ class API {
         return products;
     }
 
-    static async removeFromShoppingcart(email, id ) {
+    static async removeFromShoppingcart(id ) {
+        const email = Cookies.get('email')
         const payload = {
             "user_email": email,
             "product_id": id
@@ -92,34 +159,40 @@ class API {
 
     }
 
-    static async postShoppingCart(email, id) {
+    static async postShoppingCart(id) {
+        const email = Cookies.get('email')
         const payload = {
             "user_email": email,
             "product_id": id
         }
-        await fetch(this.userShoppingCartAddUrl, {
+        const query = await fetch(this.userShoppingCartAddUrl, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         })
+        const data = await query.json()
+        // console.log(data);
+        return data.body;
+
     }
 
-    static async postFavorites(operation, email, id) {
-        const payload = {
-            "operation": operation,
-            "email": email,
-            "product_id": id
-        }
-        await fetch(this.favouriteUrl, {
-            method: 'POST',
-            headers: {
-            'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(payload)
-        })
-    }
+    // static async postFavorites(operation, id) {
+    //     const email = Cookies.get('email')
+    //     const payload = {
+    //         "operation": operation,
+    //         "email": email,
+    //         "product_id": id
+    //     }
+    //     await fetch(this.favouriteUrl, {
+    //         method: 'POST',
+    //         headers: {
+    //         'Content-Type': 'application/json'
+    //         },
+    //         body: JSON.stringify(payload)
+    //     })
+    // }
 
     static async getDummyProduct() {
         const query = await fetch(this.dummyProductUrl)
@@ -150,51 +223,33 @@ class API {
         return product
     }
 
-    static async postFavorites(operation, email, id) {
+    static async postFavorites(operation, id) {
+        const email = Cookies.get('email')
         const payload = {
             "operation": operation,
             "email": email,
             "product_id": id
         }
-        await fetch(this.favouriteUrl, {
+        const query = await fetch(this.favouriteUrl, {
             method: 'POST',
             headers: {
             'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         })
+        console.log(query.json());
+        
     }
 
-    static async getFavorites(email) {
+    static async getFavorites() {
         try {
-            const response = await fetch(this.favouriteUrl + email);
+            const response = await fetch(this.favouriteUrl + Cookies.get('email'));
             const data = await response.json();
+            console.log(data);
             return data;
         } catch (error) {
             console.error("Error fetching favorites:", error);
             throw error;
-        }
-    }
-      
-    static async logout() {
-        console.log(cookies.get('token'))
-        if (cookies.get('token') == 'undefined') {
-            localStorage.removeItem('username')
-            return;
-        }
-        const payload = {
-            "Authorization": `Bearer ${auth}`
-        }
-        const response  = await fetch("https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signout", {
-            headers: payload
-        })
-        const data = await response;
-        if (response.ok) {
-            cookies.remove('token')
-            localStorage.removeItem('username')
-            router.push('/profile/login')
-        } else {
-            alert("Log out failed?")
         }
     }
     

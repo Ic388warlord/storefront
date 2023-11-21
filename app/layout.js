@@ -26,5 +26,6 @@ export default function RootLayout({ children }) {
         <ChatBot/>
         </body>
     </html>
+
   )
 }

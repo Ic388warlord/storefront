@@ -15,12 +15,13 @@ const ShoppingCartCard = ({product, onRemove, count}) => {
                         {/* Responsive scales */}
 
                     <div className='relative w-full h-full'>
-                        <Link href={'/product/' + product.product_id}>
+                        <Link className='' href={'/product/' + product.product_id}>
                         <Image 
                             src={product.product_images[0]} 
                             alt="Descriptive text for the image" 
-                            // width={450}
-                            // height={300}
+                            sizes="(max-width: 768px) 100vw, 33vw"
+
+
                             fill
                             objectFit='contain'
 

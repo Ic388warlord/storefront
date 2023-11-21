@@ -6,17 +6,20 @@ import API from '../../utils/api';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 
 function Product({params}) {
   const [product, setProduct] = useState(null)
   const [isFavorite, setIsFavorite] = useState(false);
   const router = useRouter()
-  const email = localStorage.getItem("username")
 
+
+
+  // Check if running on the client side
   useEffect(() => {
     const checkIsFavorite = async () => {
       try {
-        const favoritesData = await API.getFavorites(email);
+        const favoritesData = await API.getFavorites();
         const favoriteIds = Array.isArray(favoritesData.body) ? favoritesData.body : [];
         const isItemFavorite = favoriteIds.includes(params.itemId);
         setIsFavorite(isItemFavorite);
@@ -24,21 +27,27 @@ function Product({params}) {
         console.error("Error checking favorite status:", error);
       }
     };
-
     checkIsFavorite();
   }, [params.itemId]);
 
   const addToCart = async () => {
-    await API.postShoppingCart(email, params.itemId)
+    try {
+      const data = await API.postShoppingCart(params.itemId)
+      console.log(data);
+    } catch (error) {
+      console.error("Error adding to cart:", error);
+    }
+    // TODO In case you wanted to make a hook that displays the successful image
+    alert('Added to cart')
   };
   
   const FavoriteButton = () => {
     const toggleFavorite = async () => {
       try {
         if (isFavorite) {
-          await API.postFavorites("remove", email, params.itemId);
+          const data = await API.postFavorites("remove", params.itemId);
         } else {
-          await API.postFavorites("add", email, params.itemId);
+          const data = await API.postFavorites("add", params.itemId);
         }
   
         // Toggle isFavorite status after the API call

@@ -3,33 +3,24 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import API from '../utils/api';
 import FavoriteCard from '../components/favoriteCard';
-import Cookies from 'universal-cookie';
+
 
 function Favourites() {
   const [items, setItems] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [email, setEmail] = useState(null);
-  const cookies = new Cookies();
 
-  // Check if running on the client side
-  if (typeof window !== 'undefined') {
-      // Use localStorage and cookies here
-      if (cookies.get('token') === 'undefined' || localStorage.getItem('username') === null) {
-          setEmail(localStorage.getItem('username'));
-          console.log(cookies.get('token'));
-          router.push('/profile/login');
-      }
-  }
+
   useEffect(() => {
+      // Check if running on the client side
+
     const fetchFavorites = async () => {
       try {
         setLoading(true);
 
         // Fetch favorite item IDs
-        const favoritesData = await API.getFavorites(email);
+        const favoritesData = await API.getFavorites();
         const favoriteIds = Array.isArray(favoritesData.body) ? favoritesData.body : [];
-
         // Fetch product details for each favorite item
         const favoriteProducts = await Promise.all(
           favoriteIds.map(async (itemId) => {
@@ -46,13 +37,12 @@ function Favourites() {
         setLoading(false);
       }
     };
-
     fetchFavorites();
-  }, []); 
+    }, []); 
 
   const removeFavorite = async (productId) => {
     try {
-      await API.postFavorites("remove", email, productId);
+      await API.postFavorites("remove", productId);
       setItems((prevItems) => prevItems.filter((item) => item.product_id !== productId));
     } catch (error) {
       console.error("Error removing favorite:", error);

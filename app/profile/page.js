@@ -3,55 +3,34 @@
 import { useRouter } from 'next/navigation';
 import { useEffect, useState } from 'react';
 import React from 'react';
-import { useAuth } from '../utils/auth';
-import Cookies from 'universal-cookie';
+import API from '../utils/api';
+import Cookies from 'js-cookie';
+
 
 const Profile = () => {
-    // Initialize router, auth context, and cookies
     const router = useRouter();
-    const { auth, setAuth } = useAuth();
-    const cookies = new Cookies();
-    
-    
+    const [logOut, setLogOut] = useState(false);
     const [email, setEmail] = useState(null);
-    // Check if running on the client side
-    if (typeof window !== 'undefined') {
-        // Use localStorage and cookies here
-        if (cookies.get('token') === 'undefined' || localStorage.getItem('username') === null) {
-            setEmail(localStorage.getItem('username'));
-            console.log(cookies.get('token'));
-            router.push('/profile/login');
+
+
+    useEffect(() => {
+        const jwt = API.getToken();
+        if (!jwt) {
+            router.replace('profile/login');
+        } else {
+            setEmail(Cookies.get('email'));
         }
-    }
+    }, []);
 
     // Logout function
-    const logout = async () => {
-        // Check cookies and remove items from localStorage
-        if (typeof window !== 'undefined') {
-            localStorage.removeItem('username');
-
-            if (cookies.get('token') === 'undefined') {
-                localStorage.removeItem('username');
-                return;
-            }
-        }
-
-        // Send request to sign out
-        const payload = {
-            "Authorization": `Bearer ${auth}`
-        };
-        const response = await fetch("https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signout", {
-            headers: payload
-        });
-
+    const handleLogout = async () => {
         // Handle response
-        const data = await response;
-        if (response.ok) {
-            cookies.remove('token');
-            localStorage.removeItem('username');
-            router.push('/profile/login');
-        } else {
-            alert("Log out failed?");
+        setLogOut(true);
+        const data = await API.logOut();
+        if (data.statusCode === 200) {
+            API.clearCookies();
+            setLogOut(false);
+            router.replace('/profile/login');
         }
     }
 
@@ -61,21 +40,16 @@ const Profile = () => {
             <div className="border border-gray-300 shadow-lg rounded-lg p-6 max-w-sm w-full text-center">
                 <div className="mb-4">
                     <h1 className="text-5xl mb-5 uppercase">Profile</h1>
-                    {auth ? (
                         <div>
                             <div className="font-bold text-xl mb-2">{email}</div>
                             <button className="bg-transparent hover:bg-red-500 font-bold py-2 px-4 rounded-full border uppercase">
                                 View Your Purchase History
                             </button>
                         </div>
-                    ) : (
-                        <div>
-                            <p>You are now logged in!</p>
-                        </div>
-                    )}
+                    {logOut && <p className="text-red-500">Logging out...</p>}
                 </div>
                 <button className="bg-transparent hover:bg-red-500 font-bold py-2 px-4 rounded-full border uppercase"
-                    onClick={logout}>
+                    onClick={handleLogout}>
                     Log out
                 </button>
             </div>

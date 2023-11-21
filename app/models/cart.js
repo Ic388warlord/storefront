@@ -20,7 +20,6 @@ class Cart {
     }
 
     subTotal() {
-        console.log(this.items)
         return this.items.reduce((total, item) => total + item.product_price, 0);
     }
 

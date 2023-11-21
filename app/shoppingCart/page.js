@@ -16,25 +16,13 @@ function ShoppingCart() {
     const [items, setItems] = useState(null)
     const [loading, isLoading] = useState(false)
     const shoppingCart = new Cart();
-    const [email, setEmail] = useState(null);
-    const cookies = new Cookies();
-    // Check if running on the client side
-    if (typeof window !== 'undefined') {
-        // Use localStorage and cookies here
-        if (cookies.get('token') === 'undefined' || localStorage.getItem('username') === null) {
-            setEmail(localStorage.getItem('username'));
-            console.log(cookies.get('token'));
-            router.push('/profile/login');
-        }
-    }
+
     
     useEffect(() => {
         const fetchProducts = async () => {
             isLoading(true)
             try {
-                // const products = await API.getShoppingCart(localStorage.getItem('username'));
-                const products = await API.getShoppingCart(email);
-
+                const products = await API.getShoppingCart();
                 setItems(products);
                 isLoading(false)
             } catch (error) {
