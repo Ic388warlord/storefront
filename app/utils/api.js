@@ -69,7 +69,7 @@ class API {
         console.log("From API " + data.token);
         Cookies.set('token', data.token, { path: '/' });
         Cookies.set('email', data.email, { path: '/' });
-
+        Cookies.set('admin', true, { path: '/' });
         return data;
     }
 

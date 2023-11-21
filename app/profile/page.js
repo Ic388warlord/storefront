@@ -5,12 +5,14 @@ import { useEffect, useState } from 'react';
 import React from 'react';
 import API from '../utils/api';
 import Cookies from 'js-cookie';
+import Link from 'next/link';
 
 
 const Profile = () => {
     const router = useRouter();
     const [logOut, setLogOut] = useState(false);
     const [email, setEmail] = useState(null);
+    const [admin, isAdmin] = useState(true); // Chagne for later
 
 
     useEffect(() => {
@@ -19,6 +21,7 @@ const Profile = () => {
             router.replace('profile/login');
         } else {
             setEmail(Cookies.get('email'));
+            // isAdmin(Cookies.get('admin'));
         }
     }, []);
 
@@ -45,7 +48,17 @@ const Profile = () => {
                             <button className="bg-transparent hover:bg-red-500 font-bold py-2 px-4 rounded-full border uppercase">
                                 View Your Purchase History
                             </button>
+                            {
+                        admin && (
+                            <div className='m-4'>
+                                <Link href={'/manageItems'}className="bg-transparent hover:bg-blue-500 font-bold m-3 py-2 px-4 rounded-full border uppercase">
+                                    View All Orders
+                                </Link>
+                            </div>
+                        )
+                    }
                         </div>
+                        
                     {logOut && <p className="text-red-500">Logging out...</p>}
                 </div>
                 <button className="bg-transparent hover:bg-red-500 font-bold py-2 px-4 rounded-full border uppercase"

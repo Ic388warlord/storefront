@@ -4,6 +4,7 @@ import styled from "styled-components";
 import API from "../utils/api";
 import Image from "next/image";
 import Link from "next/link";
+import { ClipLoader } from "react-spinners";
 
 const GridContainer = styled.div`
   display: grid;
@@ -103,12 +104,14 @@ const Product = () => {
 
       {/* ProductDetail */}
       {loading ? (
-        <p className="flex justify-center items-center">Loading...</p>
+        <p className="absolute bottom-1/3 right-1/3 ">
+          <ClipLoader size={100}/>
+          </p>
       ) : products && products.length > 0 ? (
-        <ProductDetail className="grid grid-cols-4 m-5 col-span-2">
+        <ProductDetail className="grid grid-cols-3 m-5 col-span-2">
           {products.map((product, index) => (
             <Link key={index} href={`/product/${product.product_id}`}>
-              <div className="flex flex-col m-3 w-[200px] shadow-md overflow-hidden p-2">
+              <div className="flex flex-col m-2 w-[250px] hover:shadow-md p-5">
                     <div className="w-full h-[200px] relative"> {/* Set a relative position on the container and to encapuslate the image */}
                     <Image
                       src={product.product_images[0]}
@@ -119,7 +122,7 @@ const Product = () => {
                   </div>
                   <p className="text-sm text-gray-500 text-end">One Size</p>               
                   <div className="min-h-[3rem]"> {/* Set a minimum height to ensure consistency. This container makes the hieght consistent */}
-                  <h1 className="text-md tracking-wide uppercase whitespace-normal overflow-hidden">{product.product_name}</h1>
+                  <h1 className="text-sm tracking-wide uppercase whitespace-normal overflow-hidden">{product.product_name}</h1>
                   </div>
                   <p className="text-sm text-gray-500">{product.product_category}</p>
                 <p>CAD $ {product.product_price}</p>
