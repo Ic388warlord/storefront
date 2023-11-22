@@ -41,9 +41,13 @@ function ShoppingCart() {
         shoppingCart.remove(productId);
     };
 
-    const handleCheckout = () => {
-        router.push('shoppingCart/checkout')
+    const handleCheckout = async () => {
+        await API.stripeCheckout(shoppingCart.total, "cad")
+        .then(() => router.push('shoppingCart/checkout'))
+        .catch((e) => console.error(e));
+        // error page needed?
     }
+    
     const handleContinueShopping = () => {
         router.push('/products')
     }

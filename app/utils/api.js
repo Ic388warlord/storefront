@@ -13,6 +13,7 @@ class API {
     static meUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/me"
     static searchUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/search/"
     static dummyProductUrl = "/dummyItems.json"
+    static bigMoneySquadGangGangUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/checkout"
 
     static clearCookies() {
         Cookies.remove('token')
@@ -260,8 +261,28 @@ class API {
             throw error;
         }
     }
-    
 
+    static async stripeCheckout(amount, currency = "cad") {
+        const payload = {
+            "amount": Math.round(amount*100)/100,
+            "currency": currency,
+        }
+
+        try {
+            const query = await fetch(this.bigMoneySquadGangGangUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            console.log(query.json());
+        } catch (e) {
+            console.log("couldnt get the Stripe checkout page", e);
+            throw e;
+        }
+    }
+    
 }
 
 export default API;
