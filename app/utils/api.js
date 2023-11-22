@@ -11,6 +11,7 @@ class API {
     static loginUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signin"
     static logoutUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signout"
     static meUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/me"
+    static searchUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/search/"
     static dummyProductUrl = "/dummyItems.json"
 
     static clearCookies() {
@@ -178,21 +179,28 @@ class API {
 
     }
 
-    // static async postFavorites(operation, id) {
-    //     const email = Cookies.get('email')
-    //     const payload = {
-    //         "operation": operation,
-    //         "email": email,
-    //         "product_id": id
-    //     }
-    //     await fetch(this.favouriteUrl, {
-    //         method: 'POST',
-    //         headers: {
-    //         'Content-Type': 'application/json'
-    //         },
-    //         body: JSON.stringify(payload)
-    //     })
-    // }
+    static async getSearchProducts(searchTerm) {
+        const productList = []
+
+        const query = await fetch(this.searchUrl + searchTerm, {
+            method: 'GET',
+        })
+        const data = await query.json()
+        console.log(data.body);
+        for (const element of data.body) {
+            const product = new Product(
+                element.product_id,
+                element.product_category,
+                element.product_description,
+                element.product_images,
+                element.product_name,
+                element.product_price
+            )
+            productList.push(product);
+        }
+
+        return productList;
+    }
 
     static async getDummyProduct() {
         const query = await fetch(this.dummyProductUrl)

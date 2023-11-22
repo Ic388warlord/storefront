@@ -7,9 +7,11 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 
 const Navbar = (props) => {
-  const [search, setSearch] = useState(true);
+  const [search, setSearch] = useState(false);
   const [item, setItem] = useState();
   const router = useRouter();
+
+
 
 
   return (
