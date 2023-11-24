@@ -11,22 +11,17 @@ const ShoppingCartCard = ({product, onRemove, count}) => {
                 {/* Per Item Picture + Product details*/}
                 <article className='shadow-lg h-[250px] flex '>
                     {/* Picture */}
-                    <div className='w-1/2'>
+                    <div className='w-1/3'>
                         {/* Responsive scales */}
 
                     <div className='relative w-full h-full'>
                         <Link className='' href={'/product/' + product.product_id}>
-                        <Image 
-                            src={product.product_images[0]} 
-                            alt="Descriptive text for the image" 
-                            sizes="(max-width: 768px) 100vw, 33vw"
-
-
-                            fill
-                            objectFit='contain'
-
-                        />
-
+                            <Image 
+                                src={product.product_images[0]} 
+                                alt="Descriptive text for the image" 
+                                sizes="(max-width: 768px) 100vw, 33vw"
+                                fill
+                            />
                         </Link>
 
                  

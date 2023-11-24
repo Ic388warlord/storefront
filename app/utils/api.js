@@ -5,6 +5,7 @@ class API {
     static listAllProductsUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/list"
     static userShoppingListUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/" // Requires two api calls
     static userShoppingCartAddUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/addItem"
+    static userShoppingDeleteUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage//api/cart/delete_item_from_cart"
     static prouductUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/"
     static favouriteUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/favorite/"
     static chatboxUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/chatbot/chat"
@@ -151,13 +152,16 @@ class API {
             "user_email": email,
             "product_id": id
         }
-        await fetch(this.userShoppingCartAddUrl, {
+        const result = await fetch(this.userShoppingDeleteUrl, {
             method: 'DELETE',
             headers: {
             'Content-Type': 'application/json'
             },
             body: JSON.stringify(payload)
         })
+        console.log(result);
+        return result;
+        
 
     }
 

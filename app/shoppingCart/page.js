@@ -37,7 +37,7 @@ function ShoppingCart() {
     const removeItem = async productId => {
         // Update the items state
         setItems(currentItems => currentItems.filter(item => item.product_id !== productId));
-        await API.removeFromShoppingcart(localStorage.getItem('username'), productId);
+        await API.removeFromShoppingcart(productId);
         shoppingCart.remove(productId);
     };
 

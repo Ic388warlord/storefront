@@ -29,12 +29,16 @@ const Profile = () => {
     const handleLogout = async () => {
         // Handle response
         setLogOut(true);
-        const data = await API.logOut();
-        if (data.statusCode === 200) {
-            API.clearCookies();
+        API.clearCookies();
+        try {
             setLogOut(false);
+            const data = await API.logOut();
+            router.replace('/profile/login');
+        } catch (error) {
+            console.error(error);
             router.replace('/profile/login');
         }
+
     }
 
     // JSX for the profile component
