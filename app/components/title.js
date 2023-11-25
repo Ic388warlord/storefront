@@ -12,7 +12,7 @@ function Title() {
         StoreFront
         </h1>
         <h1 className={`${lato.weight} text-md`}>
-            One Size For All Size ||  #OneSizeFitsAll
+            Testinf One Size For All Size ||  #OneSizeFitsAllZZZZZMAN
         </h1>
 
         </div>
