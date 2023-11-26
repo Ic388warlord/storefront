@@ -5,11 +5,14 @@ import { useState } from 'react'
 import Image from 'next/image';
 import { FaTimes, FaCheckCircle, FaEdit, FaPlus } from 'react-icons/fa'
 import ClipLoader from "react-spinners/ClipLoader";
+import AddItemModal from '../components/addItemModal';
 ;
 
 const ManageItems = () => {
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(false);
+    const [modal, setModal] = useState(false);
+
     //  We can also try and see if they're admin to begin with
     useEffect(() => {
 
@@ -36,9 +39,13 @@ const ManageItems = () => {
 
             <div className="flex justify-between">
             <p>Items:</p>
-            <button className='flex'>
+            <button className='flex'
+                    onClick={() => setModal(true)}
+                    >
                 Add Item {"    "} <FaPlus size={24} />  
             </button>
+            <AddItemModal isOpen={modal} onClose={() => setModal(false)} />
+
 
 
             </div>
