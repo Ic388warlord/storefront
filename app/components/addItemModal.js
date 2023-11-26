@@ -3,19 +3,27 @@ import { useEffect, useState } from "react";
 
 const AddItemModal = ({ isOpen, onClose, itemID = null }) => {
     if (!isOpen) return null;
+    const [product, setProduct] = useState({
+      name: "",
+      price: "",
+      category: "",
+      inventory: "",
+      description: "",
+    });
 
-    const [name, setName] = useState('');
-    const [price, setPrice] = useState('');
-    const [category, setCategory] = useState('');
-    const [inventory, setInventory] = useState('');
-    const [description, setDescription] = useState('');
+    const handleOnChange= (e) => {
+        setProduct(prev => ({
+          ...prev,
+          [e.target.name]: e.target.value
+        }))
+        console.log(product);
+    }
+
 
     useEffect(() => {
         if (itemID) {
             // const fetchProduct()
         }
-        // const fetchProduct()
-
     }, [])
 
 
@@ -36,27 +44,27 @@ const AddItemModal = ({ isOpen, onClose, itemID = null }) => {
                 {/* Name and Preice */}
                 <div className="flex flex-col mr-3 w-2/3">
                     <label className="text-sm">Item Name</label>
-                    <input className="border-2 rounded-lg" type="text"value={name}  onChange={(e) => setName(e.target.value)}/>
+                    <input className="border-2 rounded-lg" type="text" name="name" onChange={handleOnChange}/>
                 </div>
                 <div className="flex flex-col w-1/3">
                     <label className="text-sm">Item Price</label>
-                    <input className="border-2 rounded-lg" type="text" value={price}  onChange={(e) => setPrice(e.target.value)} />
+                    <input className="border-2 rounded-lg" type="text"  name="price"onChange={handleOnChange}/>
                 </div>
             </div>
             <div className="flex space-between ">
                 {/* Name and Preice */}
                 <div className="flex flex-col mr-3 w-2/3">
                     <label className="text-sm">Category</label>
-                    <input className="border-2 rounded-lg" type="text"value={category} onChange={(e) => setCategory(e.target.value)} />
+                    <input className="border-2 rounded-lg" type="text" name="category" onChange={handleOnChange} />
                 </div>
                 <div className="flex flex-col w-1/3">
                     <label className="text-sm">Inventory</label>
-                    <input className="border-2 rounded-lg" type="text" value={inventory} onChange={(e) => setInventory(e.target.value)}/>
+                    <input className="border-2 rounded-lg" type="text" name="inventory"onChange={handleOnChange}/>
                 </div>
             </div>
 
             <label>Description:</label>
-            <textarea rows="4" className="border-2 rounded-lg" type="text" value={description} onChange={(e) => setDescription(e.target.value)}>
+            <textarea rows="4" className="border-2 rounded-lg" type="text" name="description" onChange={handleOnChange}>
             </textarea>
 
             <div className="flex justify-end">
