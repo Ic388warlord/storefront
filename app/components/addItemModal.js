@@ -1,14 +1,16 @@
 import React from "react";
 import { useEffect, useState } from "react";
+import API from "../utils/api";
 
 const AddItemModal = ({ isOpen, onClose, itemID = null }) => {
     if (!isOpen) return null;
     const [product, setProduct] = useState({
-      name: "",
-      price: "",
-      category: "",
-      inventory: "",
-      description: "",
+      product_name: "",
+      product_price: "",
+      product_category: "",
+      amount: "",
+      product_description: "",
+      product_image: [],
     });
 
     const handleOnChange= (e) => {
@@ -17,6 +19,14 @@ const AddItemModal = ({ isOpen, onClose, itemID = null }) => {
           [e.target.name]: e.target.value
         }))
         console.log(product);
+    }
+
+    const handleSubmit = (e) => {
+        e.preventDefault();
+      const result = API.addItem(product);
+      // console.log(result);
+
+
     }
 
 
@@ -44,27 +54,27 @@ const AddItemModal = ({ isOpen, onClose, itemID = null }) => {
                 {/* Name and Preice */}
                 <div className="flex flex-col mr-3 w-2/3">
                     <label className="text-sm">Item Name</label>
-                    <input className="border-2 rounded-lg" type="text" name="name" onChange={handleOnChange}/>
+                    <input className="border-2 rounded-lg" type="text" name="product_name" onChange={handleOnChange}/>
                 </div>
                 <div className="flex flex-col w-1/3">
                     <label className="text-sm">Item Price</label>
-                    <input className="border-2 rounded-lg" type="text"  name="price"onChange={handleOnChange}/>
+                    <input className="border-2 rounded-lg" type="text"  name="product_price"onChange={handleOnChange}/>
                 </div>
             </div>
             <div className="flex space-between ">
                 {/* Name and Preice */}
                 <div className="flex flex-col mr-3 w-2/3">
                     <label className="text-sm">Category</label>
-                    <input className="border-2 rounded-lg" type="text" name="category" onChange={handleOnChange} />
+                    <input className="border-2 rounded-lg" type="text" name="product_category" onChange={handleOnChange} />
                 </div>
                 <div className="flex flex-col w-1/3">
-                    <label className="text-sm">Inventory</label>
-                    <input className="border-2 rounded-lg" type="text" name="inventory"onChange={handleOnChange}/>
+                    <label className="text-sm">Amount</label>
+                    <input className="border-2 rounded-lg" type="text" name="amount"onChange={handleOnChange}/>
                 </div>
             </div>
 
             <label>Description:</label>
-            <textarea rows="4" className="border-2 rounded-lg" type="text" name="description" onChange={handleOnChange}>
+            <textarea rows="4" className="border-2 rounded-lg" type="text" name="product_description" onChange={handleOnChange}>
             </textarea>
 
             <div className="flex justify-end">
@@ -74,7 +84,7 @@ const AddItemModal = ({ isOpen, onClose, itemID = null }) => {
                 Cancel
             </button>
             <button className="bg-blue-300 justify-self-start hover:bg-blue-500 text-white rounded-lg p-2 my-2 w-1/3"
-            onClick={onClose}>
+            onClick={handleSubmit}>
                 Submit
             </button>
 

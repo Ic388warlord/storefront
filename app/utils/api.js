@@ -15,6 +15,7 @@ class API {
     static searchUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/search/"
     static dummyProductUrl = "/dummyItems.json"
     static bigMoneySquadGangGangUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/checkout"
+    static addItemUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/inventory"
 
     static clearCookies() {
         Cookies.remove('token')
@@ -264,6 +265,33 @@ class API {
             console.error("Error fetching favorites:", error);
             throw error;
         }
+    }
+
+    static async addItem(product) {
+        const payload = {
+            "product_name": product.product_name,
+            "product_price": product.product_price,
+            "product_category": product.product_category,
+            "amount": product.amount,
+            "product_description": product.product_description,
+            "product_images": []
+            
+        }
+        console.log(payload);
+        try {
+            const query = await fetch(this.addItemUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            console.log(query.json());
+        } catch (e) {
+            console.log("couldnt add item", e);
+            throw e;
+        }
+        
     }
 
     static async stripeCheckout(amount, currency = "cad") {
