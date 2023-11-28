@@ -6,14 +6,11 @@ import API from '../../utils/api';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
-import Cookies from 'js-cookie';
 
 function Product({params}) {
   const [product, setProduct] = useState(null)
   const [isFavorite, setIsFavorite] = useState(false);
   const router = useRouter()
-
-
 
   // Check if running on the client side
   useEffect(() => {

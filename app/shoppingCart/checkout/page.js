@@ -17,11 +17,7 @@ const CheckOut = () => {
             <FaCheckCircle size={100} color='green' />
             <p>You will receive your order in 3-4 business days! Enjoy!</p>
             <Link className='text-sm underline text-blue-300' href={'/products'}>Continue Shopping</Link>
-
-
         </div>
-
-
     </div>
   )
 }

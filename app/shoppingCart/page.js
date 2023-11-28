@@ -3,20 +3,21 @@ import React from 'react'
 import Link from 'next/link';
 import { useState, useEffect } from 'react';
 import ShoppingCartCard from '../components/shoppingCartCard';
-import Product from '../models/productModel'
 import Cart from '../models/cart';
 import API from '../utils/api';
 import { useRouter } from 'next/navigation';
-import Cookies from 'universal-cookie';
+import { loadStripe } from "@stripe/stripe-js";
+import { Elements } from "@stripe/react-stripe-js";
+import CheckoutForm from '../components/checkoutForm';
 
-
+const stripePromise = loadStripe("pk_test_51OE1VTIg25eUFBOpK8GQLXEfLNpeFcHPfWrSmujmn8pgykBBNLFcxAlTPyFZFT6xOPM0Z8mdSpArHerTituKeMnB00wKB7e6Tl");
 
 function ShoppingCart() {
     const router = useRouter()
+    const [clientSecret, setClientSecret] = React.useState("");
     const [items, setItems] = useState(null)
     const [loading, isLoading] = useState(false)
     const shoppingCart = new Cart();
-
     
     useEffect(() => {
         const fetchProducts = async () => {
@@ -42,22 +43,26 @@ function ShoppingCart() {
     };
 
     const handleCheckout = async () => {
-        await API.stripeCheckout(shoppingCart.total, "cad")
-        .then((data) => {
-            console.log("response from stripeCheckout js endpoint")
-            if (data['clientSecret'])
-            router.push('shoppingCart/checkout')
+        const total = shoppingCart.total()
+        await API.stripeCheckout(total, "cad")
+        .then((res) => {
+            setClientSecret(res.body.clientSecret) 
         })
         .catch((e) => console.error(e));
-        // error page needed?
     }
+
+    const appearance = {
+        theme: 'stripe',
+      };
+      const options = {
+        clientSecret,
+        appearance,
+      };
     
     const handleContinueShopping = () => {
         router.push('/products')
     }
-      
 
-    // TODO write a function that grabs the stuff
   return (
     <div className='p-10'>
         {/* Route */}
@@ -115,6 +120,12 @@ function ShoppingCart() {
                             <p>CAD ${items && shoppingCart.total().toFixed(2)}</p>
                         </div>
                     </div>
+
+                    {clientSecret && (
+                        <Elements options={options} stripe={stripePromise}>
+                        <CheckoutForm />
+                        </Elements>
+                    )}
 
                     {/* Checkout Continue Shopping */}
                     <p className='p-3 mt-3'>
