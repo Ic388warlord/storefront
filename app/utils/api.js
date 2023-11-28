@@ -296,7 +296,7 @@ class API {
 
     static async stripeCheckout(amount, currency = "cad") {
         const payload = {
-            "amount": Math.round(amount*100)/100,
+            "amount": (amount*100),
             "currency": currency,
         }
 
@@ -308,13 +308,8 @@ class API {
                 },
                 body: JSON.stringify(payload)
             })
-            const data = await response.json()
-            // ----- validation ----
-            console.log("stripe lambda response", data);
-            const body = JSON.parse(data.body);
-            console.log("stripe client secret", body.clientSecret)
-            // ----- end validation ---
-            return data;
+            console.log("stripe api side", response)
+            return await response.json();
         } catch (e) {
             console.log("couldnt get the Stripe checkout page", e);
             throw e;

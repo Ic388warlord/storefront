@@ -42,11 +42,15 @@ function ShoppingCart() {
     };
 
     const handleCheckout = async () => {
-        await API.stripeCheckout(shoppingCart.total, "cad")
-        .then((data) => {
+        await API.stripeCheckout(1234, "cad")
+        .then((res) => {
             console.log("response from stripeCheckout js endpoint")
-            if (data['clientSecret'])
-            router.push('shoppingCart/checkout')
+            console.log(res)
+            return res
+            // router.push('shoppingCart/checkout')
+        })
+        .then((data) => {
+            console.log(data)
         })
         .catch((e) => console.error(e));
         // error page needed?
