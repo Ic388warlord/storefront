@@ -36,7 +36,6 @@ function ShoppingCart() {
     }, []);
       
     const removeItem = async productId => {
-        // Update the items state
         setItems(currentItems => currentItems.filter(item => item.product_id !== productId));
         await API.removeFromShoppingcart(productId);
         shoppingCart.remove(productId);
@@ -59,7 +58,6 @@ function ShoppingCart() {
         } catch (error) {
             console.error("Error during checkout:", error);
         } finally {
-            // Reset the checkout status regardless of success or failure
             setCheckoutInProgress(false);
         }
     }
@@ -147,7 +145,7 @@ function ShoppingCart() {
                     <button
                         className='w-full p-3 my-5 uppercase text-lg text-center bg-red-600 hover:bg-red-800 text-white'
                         onClick={handleCheckout}
-                        disabled={checkoutInProgress} // Disable the button if checkout is in progress
+                        disabled={checkoutInProgress}
                     >
                         {checkoutInProgress ? 'Processing...' : 'Check out'}
                     </button>

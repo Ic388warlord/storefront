@@ -31,6 +31,7 @@ export default function CheckoutForm() {
         case "succeeded":
           setMessage("Payment succeeded!");
           //trigger email lambda function
+          //erase all the items from shopping cart
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -75,7 +76,7 @@ export default function CheckoutForm() {
   };
 
   return (
-    <div className='flex flex-col gap-3 justify-evenly border shadow-md w-full h-[450px] p-5 mt-5'>
+    <div className= {`flex flex-col gap-3 justify-evenly border shadow-md w-full ${message ? `h-[550px]` : `h-[450px]`} p-5 mt-5`}>
         <form id="payment-form" className="mt-3" onSubmit={handleSubmit}>
         <PaymentElement id="payment-element" options={paymentElementOptions} />
         <button disabled={isLoading || !stripe || !elements} id="submit" className='w-full p-2 my-5 uppercase text-lg text-center bg-blue-600 hover:bg-blue-800 text-white'>
