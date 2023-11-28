@@ -301,14 +301,20 @@ class API {
         }
 
         try {
-            const query = await fetch(this.bigMoneySquadGangGangUrl, {
+            const response = await fetch(this.bigMoneySquadGangGangUrl, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(payload)
             })
-            console.log(query.json());
+            const data = await response.json()
+            // ----- validation ----
+            console.log("stripe lambda response", data);
+            const body = JSON.parse(data.body);
+            console.log("stripe client secret", body.clientSecret)
+            // ----- end validation ---
+            return data;
         } catch (e) {
             console.log("couldnt get the Stripe checkout page", e);
             throw e;
