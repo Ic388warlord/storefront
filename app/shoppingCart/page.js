@@ -17,6 +17,7 @@ function ShoppingCart() {
     const [clientSecret, setClientSecret] = React.useState("");
     const [items, setItems] = useState(null)
     const [loading, isLoading] = useState(false)
+    const [checkoutInProgress, setCheckoutInProgress] = useState(false);
     const shoppingCart = new Cart();
     
     useEffect(() => {
@@ -27,7 +28,6 @@ function ShoppingCart() {
                 setItems(products);
                 isLoading(false)
             } catch (error) {
-                // Handle any errors here, such as setting an error state or logging
                 console.error("Failed to fetch products:", error);
             }
             isLoading(false)
@@ -43,16 +43,29 @@ function ShoppingCart() {
     };
 
     const handleCheckout = async () => {
-        const total = shoppingCart.total()
-        await API.stripeCheckout(total, "cad")
-        .then((res) => {
-            setClientSecret(res.body.clientSecret) 
-        })
-        .catch((e) => console.error(e));
+        if (checkoutInProgress) {
+            return;
+        }
+        try {
+            setCheckoutInProgress(true);
+            const total = shoppingCart.total();
+            if (total == null || total === 0) {
+                alert("No item in the shopping cart");
+                setCheckoutInProgress(false);
+                return;
+            }
+            const res = await API.stripeCheckout(total, "cad");
+            setClientSecret(res.body.clientSecret);
+        } catch (error) {
+            console.error("Error during checkout:", error);
+        } finally {
+            // Reset the checkout status regardless of success or failure
+            setCheckoutInProgress(false);
+        }
     }
 
     const appearance = {
-        theme: 'stripe',
+        theme: 'flat',
       };
       const options = {
         clientSecret,
@@ -131,10 +144,14 @@ function ShoppingCart() {
                     <p className='p-3 mt-3'>
                         Your items will only be available for the next 60 seconds! Get them fast before they go to the next person!
                     </p>
-                    <button className='w-full p-3 my-5 uppercase text-lg text-center bg-red-600 text-white' onClick={handleCheckout}>
-                        Check out
+                    <button
+                        className='w-full p-3 my-5 uppercase text-lg text-center bg-red-600 hover:bg-red-800 text-white'
+                        onClick={handleCheckout}
+                        disabled={checkoutInProgress} // Disable the button if checkout is in progress
+                    >
+                        {checkoutInProgress ? 'Processing...' : 'Check out'}
                     </button>
-                    <button className='w-full p-3 my-5 uppercase text-lg text-center border-2' onClick={handleContinueShopping}>
+                    <button className='w-full p-3 uppercase text-lg text-center border-2 hover:bg-black hover:text-white' onClick={handleContinueShopping}>
                         Continue Shopping
                     </button>
             </section>

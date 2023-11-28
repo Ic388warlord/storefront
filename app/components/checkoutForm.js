@@ -57,7 +57,7 @@ export default function CheckoutForm() {
     const { error } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:3000/shoppingCart/checkout",
+        return_url: "http://localhost:3000/shoppingCart/checkout", //change it to actual link
       },
     });
 
@@ -75,16 +75,17 @@ export default function CheckoutForm() {
   };
 
   return (
-    <form id="payment-form" onSubmit={handleSubmit}>
-
-      <PaymentElement id="payment-element" options={paymentElementOptions} />
-      <button disabled={isLoading || !stripe || !elements} id="submit">
-        <span id="button-text">
-          {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
-        </span>
-      </button>
-      {/* Show any error or success messages */}
-      {message && <div id="payment-message">{message}</div>}
-    </form>
+    <div className='flex flex-col gap-3 justify-evenly border shadow-md w-full h-[450px] p-5 mt-5'>
+        <form id="payment-form" className="mt-3" onSubmit={handleSubmit}>
+        <PaymentElement id="payment-element" options={paymentElementOptions} />
+        <button disabled={isLoading || !stripe || !elements} id="submit" className='w-full p-2 my-5 uppercase text-lg text-center bg-blue-600 hover:bg-blue-800 text-white'>
+            <span id="button-text">
+            {isLoading ? <div className="spinner" id="spinner"></div> : "Pay now"}
+            </span>
+        </button>
+        {/* Show any error or success messages */}
+        {message && <div id="payment-message">{message}</div>}
+        </form>
+    </div>
   );
 }

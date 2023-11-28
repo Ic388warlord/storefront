@@ -1,15 +1,9 @@
 'use client'
-import { useRouter } from 'next/navigation'
 import React from 'react'
-import { FaCheck, FaCheckCircle } from 'react-icons/fa'
+import { FaCheckCircle } from 'react-icons/fa'
 import Link from 'next/link'
 
 const CheckOut = () => {
-    const router = useRouter()
-    const handleContinueShopping = () => {
-        router.push('/products')
-    }
-
   return (
     <div className='flex h-screen w-full flex-col justify-center items-center'>
         <div className='border flex flex-col items-center justify-evenly w-1/3 h-1/3 shadow-md p-3'>

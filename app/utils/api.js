@@ -308,11 +308,6 @@ class API {
                 body: JSON.stringify(payload)
             })
             const data = await response.json()
-            // ----- validation ----
-            console.log("stripe lambda response", data);
-            const body = JSON.parse(data.body);
-            console.log("stripe client secret", body.clientSecret)
-            // ----- end validation ---
             return data;
         } catch (e) {
             console.log("couldnt get the Stripe checkout page", e);
