@@ -134,7 +134,7 @@ function ShoppingCart() {
 
                     {clientSecret && (
                         <Elements options={options} stripe={stripePromise}>
-                        <CheckoutForm />
+                        <CheckoutForm items={items} />
                         </Elements>
                     )}
 

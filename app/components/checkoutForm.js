@@ -1,14 +1,15 @@
 import React from "react";
+import Cookies from "js-cookie";
+import API from "../utils/api";
 import {
   PaymentElement,
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
 
-export default function CheckoutForm() {
+export default function CheckoutForm({items}) {
   const stripe = useStripe();
   const elements = useElements();
-
 
   const [message, setMessage] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -26,12 +27,16 @@ export default function CheckoutForm() {
       return;
     }
 
-    stripe.retrievePaymentIntent(clientSecret).then(({ paymentIntent }) => {
-      switch (paymentIntent.status) {
+    stripe.retrievePaymentIntent(clientSecret).then(async ({ paymentIntent }) => {
+        switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
-          //trigger email lambda function
-          //erase all the items from shopping cart
+          const productIds = items.map(item => item.product_id);
+            try {
+                await API.postOrder(productIds);
+            } catch (error) {
+                console.error("Error posting order:", error);
+            }
           break;
         case "processing":
           setMessage("Your payment is processing.");

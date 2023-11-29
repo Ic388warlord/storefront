@@ -16,6 +16,7 @@ class API {
     static dummyProductUrl = "/dummyItems.json"
     static bigMoneySquadGangGangUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/checkout"
     static addItemUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/inventory"
+    static orderEmailUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/order"
 
     static clearCookies() {
         Cookies.remove('token')
@@ -313,6 +314,22 @@ class API {
             console.log("couldnt get the Stripe checkout page", e);
             throw e;
         }
+    }
+
+    static async postOrder(products) {
+        const email = Cookies.get('email') 
+        const payload = {
+            "email": email,
+            "products": products
+        }
+        const query = await fetch(this.orderEmailUrl, {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        console.log(query.json());
     }
 }
 
