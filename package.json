@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^2.4.0",
+    "@stripe/stripe-js": "^2.2.0",
     "jquery": "^3.7.1",
     "js-cookie": "^3.0.5",
     "next": "14.0.1",

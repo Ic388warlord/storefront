@@ -9,6 +9,7 @@ class API {
     static prouductUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/"
     static favouriteUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/favorite/"
     static chatboxUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/chatbot/chat"
+    static contact = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/contact/us"
     static loginUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signin"
     static logoutUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signout"
     static meUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/me"
@@ -72,7 +73,7 @@ class API {
         })
         const data = await response.json();
         console.log("From API " + data.token);
-        Cookies.set('token', data.token, { path: '/' });
+        Cookies.set('token', data.authToken, { path: '/' });
         Cookies.set('email', data.email, { path: '/' });
         Cookies.set('admin', true, { path: '/' });
         return data;
@@ -112,6 +113,18 @@ class API {
         console.log(data.lexResponse)
 
         return data.lexResponse;
+    }
+
+    static async contactForm(payload) {
+        const response = await fetch(this.contact, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        const data = await response.json();
+        return data;
     }
 
     static async getShoppingCart() {
