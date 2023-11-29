@@ -72,7 +72,7 @@ class API {
         })
         const data = await response.json();
         console.log("From API " + data.token);
-        Cookies.set('token', data.token, { path: '/' });
+        Cookies.set('token', data.authToken, { path: '/' });
         Cookies.set('email', data.email, { path: '/' });
         Cookies.set('admin', true, { path: '/' });
         return data;
