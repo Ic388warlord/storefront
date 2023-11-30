@@ -1,15 +1,16 @@
 import React from "react";
-import Cookies from "js-cookie";
 import API from "../utils/api";
 import {
   PaymentElement,
   useStripe,
   useElements
 } from "@stripe/react-stripe-js";
+import { useRouter } from 'next/navigation';
 
 export default function CheckoutForm({items}) {
   const stripe = useStripe();
   const elements = useElements();
+  const router = useRouter()
 
   const [message, setMessage] = React.useState(null);
   const [isLoading, setIsLoading] = React.useState(false);
@@ -73,7 +74,7 @@ export default function CheckoutForm({items}) {
       } catch (error) {
           console.error("Error posting order:", error);
       }
-      // handle your redirect here >> window href change location --> 
+      router.push('/shoppingCart/checkout');
     } else {
       console.log("Payment failed");
       // handleOther();

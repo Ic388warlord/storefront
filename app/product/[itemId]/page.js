@@ -146,13 +146,6 @@ function Product({params}) {
                     <span>Add to Cart</span>
                   </button>
                   <FavoriteButton/>
-                  <button
-                    className="bg-blue-600 text-white border-2 px-6 py-2 rounded flex items-center justify-center hover:bg-gray-300 hover:text-blue-600"
-                    onClick={checkOut}
-                  >
-                    <FaMoneyCheck className="mr-2" size={24} />
-                    <span>Check Out</span>
-                  </button>
                 </div>
               </div>
             </div>
