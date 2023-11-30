@@ -1,7 +1,7 @@
 'use client';
 
 import Link from 'next/link';
-import { FaShoppingCart, FaUser, FaHeart, FaProductHunt, FaStop, FaTimes, FaSearch, FaTorah } from 'react-icons/fa';
+import { FaShoppingCart, FaUser, FaHeart, FaProductHunt, FaStop, FaTimes, FaSearch, FaTorah, FaBook } from 'react-icons/fa';
 import { useAuth } from '../utils/auth';
 import { useState } from 'react';
 import { useRouter } from 'next/navigation';
@@ -71,7 +71,7 @@ const Navbar = (props) => {
         </Link>
         <Link href="/contacts">
           {/* <a className="flex items-center"> */}
-            <FaTorah className="mr-2"size={24} /> 
+            <FaBook className="mr-2"size={24} /> 
           {/* </a> */}
         </Link>
       </div>

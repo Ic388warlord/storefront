@@ -4,6 +4,7 @@ import { Router } from 'next/router';
 import API from '@/app/utils/api';
 import { useAuth } from '@/app/utils/auth';
 import { React, useContext, useState } from 'react';
+import Link from 'next/link';
 
 const Profile = () => {
     const router = useRouter()
@@ -49,9 +50,15 @@ const Profile = () => {
                             className="w-full px-3 py-2 mb-3 text-gray-700 border rounded"
                         />
                     </div>
-                    <button type="submit" className="bg-transparent hover:bg-red-500 text-red-700 hover:text-white font-bold py-2 px-4 rounded-full border border-red-500 uppercase">
-                        Login
-                    </button>
+
+                    <div className="flex flex-col">
+                        <button type="submit" className="bg-transparent hover:bg-red-500 text-red-700 hover:text-white font-bold py-2 px-4 rounded-full border border-red-500 uppercase">
+                            Login
+                        </button>
+                        <Link href="/profile/signup" className="bg-transparent text-sm hover:text-blue-500 text-blue-300 font-bold py-2 px-4 rounded-full uppercase">
+                            Don't have an account? Sign up!
+                        </Link>
+                    </div>
                     {message && <p className="text-slate-500">{message}</p>}
                 </form>
             </div>

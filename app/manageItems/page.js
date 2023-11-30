@@ -6,15 +6,22 @@ import Image from 'next/image';
 import { FaTimes, FaCheckCircle, FaEdit, FaPlus } from 'react-icons/fa'
 import ClipLoader from "react-spinners/ClipLoader";
 import AddItemModal from '../components/addItemModal';
+import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 ;
 
 const ManageItems = () => {
     const [products, setProducts] = useState(null);
     const [loading, setLoading] = useState(false);
     const [modal, setModal] = useState(false);
+    const router = useRouter();
 
     //  We can also try and see if they're admin to begin with
     useEffect(() => {
+        // if (Cookies.get('role') !== 'admin') {
+        //     alert('You are not an admin')
+        //     router.push('/profile')
+        // }
 
         const fetchProducts = async () => {
             setLoading(true);
@@ -24,6 +31,10 @@ const ManageItems = () => {
         }
         fetchProducts();
     }, []);
+
+    const handleDelete = async (id) => {
+        await API.deleteItem(id);
+    }
 
 
   return (
@@ -72,8 +83,9 @@ const ManageItems = () => {
                     <button className="p-2">
                         <FaEdit size={24} color='lightBlue' />
                     </button>
-                    <button className="p-2">
+                    <button className="p-2" onClick={() => handleDelete(product.product_id)}>
                         <FaTimes size={24} color='lightRed' />
+                        
                     </button>
                     <button className="p-2">
                         <FaCheckCircle size={24}  color='lightGreen'/>

@@ -16,7 +16,9 @@ class API {
     static searchUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/search/"
     static dummyProductUrl = "/dummyItems.json"
     static bigMoneySquadGangGangUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/cart/checkout"
-    static addItemUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/inventory"
+    static productURL = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/product/inventory"
+    static signUpUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/signup"
+    static confirmSignUpUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/auth/confirmsignup"
     static orderEmailUrl = "https://cwkc8gb6n1.execute-api.us-west-2.amazonaws.com/stage/api/order"
 
     static clearCookies() {
@@ -72,10 +74,45 @@ class API {
             body: JSON.stringify(payload)
         })
         const data = await response.json();
-        console.log("From API " + data.token);
+        console.log("From API " + data.authToken);
         Cookies.set('token', data.authToken, { path: '/' });
         Cookies.set('email', data.email, { path: '/' });
         Cookies.set('admin', true, { path: '/' });
+        Cookies.set('role', data.role, { path: '/' });
+        return data;
+    }
+
+    static async signUp (username, password) {
+        const payload = {
+            "email": username,
+            "password": password
+        }
+        const response = await fetch(this.signUpUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        })
+        const data = await response.json();
+        console.log("From API " + data.message);
+        return data;
+    }
+
+    static async confirmSignUp (username, code) {
+        const payload = {
+            "email": username,
+            "confirmationCode": code
+        }
+        const response = await fetch(this.confirmSignUpUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(payload)
+        })
+        const data = await response.json();
+        console.log("From API " + data.message);
         return data;
     }
 
@@ -293,7 +330,7 @@ class API {
         }
         console.log(payload);
         try {
-            const query = await fetch(this.addItemUrl, {
+            const query = await fetch(this.productURL, {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
@@ -305,7 +342,26 @@ class API {
             console.log("couldnt add item", e);
             throw e;
         }
-        
+    }
+    static async deleteItem(productid) {
+        const payload = {
+            "product_id": productid,
+        }
+        console.log(payload);
+        try {
+            const query = await fetch(this.productURL, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(payload)
+            })
+            console.log(query.json());
+        } catch (e) {
+            console.log("couldnt delete item", e);
+            throw e;
+        }
+        return "Success"
     }
 
     static async stripeCheckout(amount, currency = "cad") {
@@ -344,6 +400,8 @@ class API {
         })
         console.log(query.json());
     }
+
+
 }
 
 export default API;

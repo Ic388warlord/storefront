@@ -24,6 +24,8 @@ const AddItemModal = ({ isOpen, onClose, itemID = null }) => {
     const handleSubmit = (e) => {
         e.preventDefault();
       const result = API.addItem(product);
+      onClose();
+
       // console.log(result);
 
 
