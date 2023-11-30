@@ -31,12 +31,6 @@ export default function CheckoutForm({items}) {
         switch (paymentIntent.status) {
         case "succeeded":
           setMessage("Payment succeeded!");
-          const productIds = items.map(item => item.product_id);
-            try {
-                await API.postOrder(productIds);
-            } catch (error) {
-                console.error("Error posting order:", error);
-            }
           break;
         case "processing":
           setMessage("Your payment is processing.");
@@ -60,17 +54,29 @@ export default function CheckoutForm({items}) {
 
     setIsLoading(true);
 
-    const { error } = await stripe.confirmPayment({
+    const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
         return_url: "http://localhost:3000/shoppingCart/checkout", //change it to actual link
       },
+      redirect: "if_required"
     });
 
-    if (error.type === "card_error" || error.type === "validation_error") {
-      setMessage(error.message);
+    if (error) {
+      console.error(error);
+      // handleError();
+    } else if (paymentIntent && paymentIntent.status === "succeeded") {
+      console.log("Payment succeeded");
+      const productIds = items.map(item => item.product_id);
+      try {
+          await API.postOrder(productIds);
+      } catch (error) {
+          console.error("Error posting order:", error);
+      }
+      // handle your redirect here >> window href change location --> 
     } else {
-      setMessage("An unexpected error occurred.");
+      console.log("Payment failed");
+      // handleOther();
     }
 
     setIsLoading(false);
