@@ -10,7 +10,7 @@ const Carousel = () => {
 const [activeSlide, setActiveSlide] = useState(0);
 
   const carouselItems = [
-    '/Destress.jpeg',
+    '/mainphoto.jpg',
     '/teamFour.jpeg',
   ];
 
