@@ -20,7 +20,7 @@ class Cart {
     }
 
     subTotal() {
-        return this.items.reduce((total, item) => total + item.product_price, 0);
+        return this.items.reduce((total, item) => total + item.product_price * item.count, 0);
     }
 
     tax() {
@@ -35,9 +35,16 @@ class Cart {
         return this.items.length;
     }
 
-    // Optional: Method to display all items in the cart
     listItems() {
         return this.items;
+    }
+
+    update(productId, newCount) {
+        const itemIndex = this.items.findIndex((item) => item.product_id === productId);
+
+        if (itemIndex !== -1) {
+            this.items[itemIndex].count = newCount;
+        }
     }
 }
 

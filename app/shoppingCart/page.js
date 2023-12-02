@@ -19,6 +19,9 @@ function ShoppingCart() {
     const [loading, isLoading] = useState(false)
     const [checkoutInProgress, setCheckoutInProgress] = useState(false);
     const shoppingCart = new Cart();
+    const [subTotal, setSubTotal] = useState(null);
+    const [tax, setTax] = useState(null);
+    const [total, setTotal] = useState(null);
     
     useEffect(() => {
         const fetchProducts = async () => {
@@ -34,6 +37,48 @@ function ShoppingCart() {
         };
         fetchProducts();
     }, []);
+
+    useEffect(() => {
+        // This effect runs when items change
+        if (items) {
+          // Calculate and update subtotal, tax, and total
+          const newSubTotal = shoppingCart.subTotal();
+          const newTax = shoppingCart.tax();
+          const newTotal = shoppingCart.total();
+    
+          // Update the state with new values
+          setSubTotal(newSubTotal);
+          setTax(newTax);
+          setTotal(newTotal);
+        }
+      }, [items]);
+
+    const updateItemCount = async (productId, newCount, newPrice) => {
+        try {
+          // Update the state in ShoppingCart
+          setItems((currentItems) =>
+            currentItems.map((item) =>
+              item.product_id === productId ? { ...item, count: newCount } : item
+            )
+          );
+    
+          // Update the shoppingCart
+          shoppingCart.update(productId, newCount);
+    
+          // Recalculate and update subtotal, tax, and total
+          // You might need to adjust the calculation based on your business logic
+          const newSubTotal = shoppingCart.subTotal();
+          const newTax = shoppingCart.tax();
+          const newTotal = shoppingCart.total();
+    
+          // Update the state with new values
+          setSubTotal(newSubTotal);
+          setTax(newTax);
+          setTotal(newTotal);
+        } catch (error) {
+          console.error('Error updating item count:', error);
+        }
+      };
       
     const removeItem = async productId => {
         setItems(currentItems => currentItems.filter(item => item.product_id !== productId));
@@ -95,7 +140,7 @@ function ShoppingCart() {
                 // Render items if loading is false and items is truthy
                 items.map((product, index) => {
                     shoppingCart.add(product);
-                    return <ShoppingCartCard product={product} onRemove={removeItem} key={index} count={1} />
+                    return <ShoppingCartCard product={product} onRemove={removeItem} updateItemCount={updateItemCount} key={index} />
                 })
             ) : (
                 // Render a message (or nothing) if loading is false and items is falsy
@@ -113,22 +158,22 @@ function ShoppingCart() {
                         {/* Item Subtotal */}
                         <div className="flex justify-between">
                             <p>Item Subtotal</p>
-                            <p>CAD ${items && shoppingCart.subTotal().toFixed(2)}</p>
+                            <p>CAD ${(subTotal !== null ? subTotal.toFixed(2) : 0 )}</p>
                         </div>
                         {/* Subtotal */}
                         <div className="flex font-bold my-2 text-lg uppercase justify-between">
                             <p>Subtotal</p>
-                            <p>CAD ${items && shoppingCart.subTotal().toFixed(2)}</p>
+                            <p>CAD ${(subTotal !== null ? subTotal.toFixed(2) : 0 )}</p>
                         </div>
                         {/* Tax */}
                         <div className="flex justify-between">
                             <p>Estimated Tax</p>
-                            <p>CAD ${items && shoppingCart.tax().toFixed(2)}</p>
+                            <p>CAD ${(tax !== null ? tax.toFixed(2) : 0 )}</p>
                         </div>
                         {/* Order Total */}
                         <div className="flex font-bold my-2 uppercase justify-between">
                             <p>Order Total</p>
-                            <p>CAD ${items && shoppingCart.total().toFixed(2)}</p>
+                            <p>CAD ${(total !== null ? total.toFixed(2) : 0 )}</p>
                         </div>
                     </div>
 

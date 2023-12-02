@@ -192,7 +192,8 @@ class API {
                 productData.body.product_images,
                 productData.body.product_name,
                 productData.body.product_price
-            )
+            );
+            product.count = element.count;
             products.push(product); 
         }
         return products;
@@ -393,6 +394,23 @@ class API {
         }
         const query = await fetch(this.orderEmailUrl, {
             method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(payload)
+        })
+        console.log(query.json());
+    }
+
+    static async updateItemCount(product_id, operation) {
+        const email = Cookies.get('email') 
+        const payload = {
+            "user_email": email,
+            "product_id": product_id,
+            "operation" : operation,
+        }
+        const query = await fetch(this.userShoppingListUrl, {
+            method: 'PATCH',
             headers: {
             'Content-Type': 'application/json'
             },
