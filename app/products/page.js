@@ -17,6 +17,7 @@ const LeftMenu = styled.div`
   grid-column: span 1;
   grid-row: span 12;
   background-color: #f0f0f0;
+  margin-right: 200px;
 `;
 
 const ProductDetail = styled.div`
@@ -26,6 +27,7 @@ const ProductDetail = styled.div`
   display: grid;
   gap: 10px;
   padding: 10px;
+  margin-right: 200px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
 `;
 
@@ -37,7 +39,16 @@ const Product = () => {
   const categories = [
     { name: "Men", subcategories: ["Shirts", "Trousers", "Accessories"] },
     { name: "Women", subcategories: ["Tops", "Bottoms", "Accessories"] },
-    { name: "Sports", subcategories: ["Running", "Training", "Basketball"] },
+    { name: "Rugby", subcategories: ["Running", "Training", "Basketball"] },
+    { name: "Running", subcategories: ["Shirts", "Trousers", "Accessories"] },
+    { name: "Golf", subcategories: ["Tops", "Bottoms", "Accessories"] },
+    { name: "Baseball", subcategories: ["Running", "Training", "Basketball"] },
+    { name: "Enoki", subcategories: ["Tops", "Bottoms", "Accessories"] },
+    { name: "Fred The Best", subcategories: ["Running", "Training", "Basketball"] },
+    { name: "Gaming", subcategories: ["Running", "Training", "Basketball"] },
+    { name: "Life", subcategories: ["Tops", "Bottoms", "Accessories"] },
+    { name: "Software", subcategories: ["Running", "Training", "Basketball"] },
+    { name: "Jumbo", subcategories: ["Running", "Training", "Basketball"] },
   ];
 
   const handleCategoryClick = (index) => {
@@ -76,7 +87,7 @@ const Product = () => {
         >
           Categories
         </h2>
-        <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+        <ul style={{ listStyle: "none", padding: 0, margin: 5 }}>
           {categories.map((category, index) => (
             <li
               key={index}
