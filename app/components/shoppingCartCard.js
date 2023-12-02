@@ -31,16 +31,15 @@ const ShoppingCartCard = ({ product, onRemove, updateItemCount }) => {
                 {/* Per Item Picture + Product details*/}
                 <article className='shadow-lg h-[250px] flex '>
                     {/* Picture */}
-                    <div className='w-1/3'>
+                    <div className='w-1/4'>
                         {/* Responsive scales */}
 
                     <div className='relative w-full h-full'>
                         <Link className='' href={'/product/' + product.product_id}>
                             <Image 
+                                fill
                                 src={product.product_images[0]} 
                                 alt="Descriptive text for the image" 
-                                sizes="(max-width: 768px) 100vw, 33vw"
-                                fill
                             />
                         </Link>
                     </div>
