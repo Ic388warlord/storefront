@@ -8,6 +8,7 @@ const FavoriteCard = ({ product, onRemove }) => {
 
     const addToCart = async () => {
         await API.postShoppingCart(product.product_id)
+        alert("Added to cart");
       };
     
     return (
