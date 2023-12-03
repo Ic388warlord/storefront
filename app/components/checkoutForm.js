@@ -7,7 +7,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useRouter } from 'next/navigation';
 
-export default function CheckoutForm({items}) {
+export default function CheckoutForm({items, productCounts}) {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter()
@@ -58,7 +58,8 @@ export default function CheckoutForm({items}) {
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:3000/shoppingCart/checkout", //change it to actual link
+        return_url: "http://storefront-ebs-env.eba-ztgpx9h9.us-west-2.elasticbeanstalk.com/shoppingCart/checkout",
+        // return_url: "http://localhost:3000/shoppingCart/checkout", //change it to actual link
       },
       redirect: "if_required"
     });
@@ -69,8 +70,10 @@ export default function CheckoutForm({items}) {
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       console.log("Payment succeeded");
       const productIds = items.map(item => item.product_id);
+      const counts = productCounts;
+      alert(counts);
       try {
-          await API.postOrder(productIds);
+          await API.postOrder(productIds, counts);
       } catch (error) {
           console.error("Error posting order:", error);
       }

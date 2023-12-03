@@ -386,11 +386,12 @@ class API {
         }
     }
 
-    static async postOrder(products) {
+    static async postOrder(products, count) {
         const email = Cookies.get('email') 
         const payload = {
             "email": email,
-            "products": products
+            "products": products,
+            "count": count,
         }
         const query = await fetch(this.orderEmailUrl, {
             method: 'POST',

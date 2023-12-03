@@ -179,7 +179,7 @@ function ShoppingCart() {
 
                     {clientSecret && (
                         <Elements options={options} stripe={stripePromise}>
-                        <CheckoutForm items={items} />
+                        <CheckoutForm items={items} productCounts={items.map(item => item.count)}/>
                         </Elements>
                     )}
 

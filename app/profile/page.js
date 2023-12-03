@@ -49,9 +49,6 @@ const Profile = () => {
                     <h1 className="text-5xl mb-5 uppercase">Profile</h1>
                         <div>
                             <div className="font-bold text-xl mb-2">{email}</div>
-                            <button className="bg-transparent hover:bg-red-500 font-bold py-2 px-4 rounded-full border uppercase">
-                                View Your Purchase History
-                            </button>
                             {
                         admin && (
                             <div className='m-4'>
