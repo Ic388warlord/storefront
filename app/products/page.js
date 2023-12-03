@@ -26,10 +26,10 @@ const ProductDetail = styled.div`
   background-color: #ffffff;
   display: grid;
   gap: 10px;
-  padding: 10px;
+  padding: 40px;
   margin-right: 200px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-  width: 90%;
+  width: 95%;
   overflow-x : hidden;
   overflow-y : auto;
   min-height: 400px;
