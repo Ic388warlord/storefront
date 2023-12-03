@@ -21,7 +21,7 @@ const SignUp = () => {
         console.log(username, password)
         // Token gets admitted in here
         const data = await API.signUp(username, password)
-        if (data.statusCode === 200) {
+        if (data.statusCode === 201) {
             setConfirm(true)
             setMessage(data.message)
             console.log(confirm)
@@ -75,21 +75,19 @@ const SignUp = () => {
 
                  </div>
                  {message && <p className="text-slate-500">{message}</p>}
-                 <div>
-                    {confirm && 
-                    <>
-                    <label className="text-md mt-2">Passcode</label>
-                    <input
-                        type="text"
-                        value={passcode}
-                        onChange={(e) => setPasscode(e.target.value)}
-                        className="w-full px-3 py-2 mb-3 text-gray-700 border rounded">
-                    </input>
-                    <button className="border rounded-lg bg-blue-400 p-3"onClick={handleConfirm}> Confirm </button>
-                    </>
-                    }
-                
-            </div>
+                 {confirm && (
+    <div className="">
+        <label className="text-md mt-2">Passcode</label>
+        <input
+            type="text"
+            value={passcode}
+            onChange={(e) => setPasscode(e.target.value)}
+            className="w-full px-3 py-2 mb-3 text-gray-700 border rounded"
+        />
+        <button className="border rounded-lg bg-blue-400 p-3" onClick={handleConfirm}> Confirm </button>
+    </div>
+)}
+
              </form>
             
 
