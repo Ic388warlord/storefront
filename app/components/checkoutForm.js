@@ -7,7 +7,7 @@ import {
 } from "@stripe/react-stripe-js";
 import { useRouter } from 'next/navigation';
 
-export default function CheckoutForm({items}) {
+export default function CheckoutForm({items, productCounts}) {
   const stripe = useStripe();
   const elements = useElements();
   const router = useRouter()
@@ -69,8 +69,10 @@ export default function CheckoutForm({items}) {
     } else if (paymentIntent && paymentIntent.status === "succeeded") {
       console.log("Payment succeeded");
       const productIds = items.map(item => item.product_id);
+      const counts = productCounts;
+      alert(counts);
       try {
-          await API.postOrder(productIds);
+          await API.postOrder(productIds, counts);
       } catch (error) {
           console.error("Error posting order:", error);
       }
