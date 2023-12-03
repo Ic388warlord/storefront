@@ -17,7 +17,7 @@ const LeftMenu = styled.div`
   grid-column: span 1;
   grid-row: span 12;
   background-color: #f0f0f0;
-  margin-right: 200px;
+  margin-right: 100px;
 `;
 
 const ProductDetail = styled.div`
@@ -29,6 +29,11 @@ const ProductDetail = styled.div`
   padding: 10px;
   margin-right: 200px;
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  width: 90%;
+  overflow-x : hidden;
+  overflow-y : atuo;
+  min-height: 400px;
+  height: auto;
 `;
 
 const Product = () => {
