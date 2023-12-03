@@ -53,7 +53,7 @@ const Profile = () => {
                         admin && (
                             <div className='m-4'>
                                 <Link href={'/manageItems'}className="bg-transparent hover:bg-blue-500 font-bold m-3 py-2 px-4 rounded-full border uppercase">
-                                    View All Orders
+                                    Manage Items
                                 </Link>
                             </div>
                         )

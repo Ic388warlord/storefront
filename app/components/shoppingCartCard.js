@@ -22,7 +22,7 @@ const ShoppingCartCard = ({ product, onRemove, updateItemCount }) => {
     
             // Use the updater function to ensure correct state updates
             setLocalCount(prevCount => {
-                const newCount = operation === 'increment' ? prevCount + 1 : (prevCount > 1 ? prevCount - 1 : prevCount);
+                const newCount = operation === 'increment' ? prevCount + 1 : (prevCount > 1 ? prevCount - 1 : 1);
                 setLocalPrice(newCount * product_price);
                 updateItemCount(product_id, newCount, newCount * product_price);
                 return newCount;
