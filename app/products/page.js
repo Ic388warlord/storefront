@@ -31,7 +31,7 @@ const ProductDetail = styled.div`
   grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
   width: 90%;
   overflow-x : hidden;
-  overflow-y : atuo;
+  overflow-y : auto;
   min-height: 400px;
   height: auto;
 `;
