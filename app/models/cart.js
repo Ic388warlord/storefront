@@ -45,6 +45,9 @@ class Cart {
         if (itemIndex !== -1) {
             this.items[itemIndex].count = newCount;
         }
+
+        const totalCount = this.items.reduce((total, item) => total + item.count, 0);
+        return totalCount;
     }
 }
 

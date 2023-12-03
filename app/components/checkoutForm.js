@@ -70,7 +70,6 @@ export default function CheckoutForm({items, productCounts}) {
       console.log("Payment succeeded");
       const productIds = items.map(item => item.product_id);
       const counts = productCounts;
-      alert(counts);
       try {
           await API.postOrder(productIds, counts);
       } catch (error) {

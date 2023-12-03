@@ -53,7 +53,7 @@ function ShoppingCart() {
         }
       }, [items]);
 
-    const updateItemCount = async (productId, newCount, newPrice) => {
+    const updateItemCount = async (productId, newCount) => {
         try {
           // Update the state in ShoppingCart
           setItems((currentItems) =>
@@ -154,7 +154,7 @@ function ShoppingCart() {
                     {/* Price Box */}
                     <div className="flex flex-col gap-3 justify-evenly border shadow-md w-full h-[300px] p-5">
                         {/* Todo Add logic here */}
-                        <div className="text-lg font-bold uppercase">Order summary| {shoppingCart.length()} items</div>
+                        <div className="text-lg font-bold uppercase">Order summary| {shoppingCart.update()} items</div>
                         {/* Item Subtotal */}
                         <div className="flex justify-between">
                             <p>Item Subtotal</p>
