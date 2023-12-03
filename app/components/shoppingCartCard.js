@@ -1,6 +1,7 @@
 'use client'
-import React, { useState } from 'react'
+import React from 'react'
 import { FaTimes } from 'react-icons/fa'
+import { useState, useEffect } from 'react';
 import API from '../utils/api';
 import Image from 'next/image'
 import Link from 'next/link'
@@ -8,6 +9,12 @@ import Link from 'next/link'
 const ShoppingCartCard = ({ product, onRemove, updateItemCount }) => {
     const [localCount, setLocalCount] = useState(product.count);
     const [localPrice, setLocalPrice] = useState(product.product_price * product.count);
+
+    useEffect(() => {
+        // Reset local state when product count changes
+        setLocalCount(product.count);
+        setLocalPrice(product.product_price * product.count);
+    }, [product.count, product.product_price]);
 
     const handleUpdateItemCount = async (product_id, product_price, operation) => {
         try {

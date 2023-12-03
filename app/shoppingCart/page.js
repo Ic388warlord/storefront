@@ -80,10 +80,21 @@ function ShoppingCart() {
         }
       };
       
-    const removeItem = async productId => {
-        setItems(currentItems => currentItems.filter(item => item.product_id !== productId));
-        await API.removeFromShoppingcart(productId);
-        shoppingCart.remove(productId);
+      const removeItem = async (productId) => {
+        try {
+            // Remove the item from the server
+            await API.removeFromShoppingcart(productId);
+
+            // Update the local state
+            setItems((currentItems) =>
+                currentItems.filter((item) => item.product_id !== productId)
+            );
+
+            // Update the shoppingCart
+            shoppingCart.remove(productId);
+        } catch (error) {
+            console.error("Error removing item:", error);
+        }
     };
 
     const handleCheckout = async () => {
