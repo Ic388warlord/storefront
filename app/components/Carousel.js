@@ -18,7 +18,7 @@ const [activeSlide, setActiveSlide] = useState(0);
     setActiveSlide(index);
   };
   return (
-    <section className="w-full h-[710px] flex flex-col"
+    <section className="w-full h-screen md:h-[710px] flex flex-col"
     >
         {/* <NavBar /> */}
         <div className="relative h-full">

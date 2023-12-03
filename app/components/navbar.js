@@ -15,7 +15,7 @@ const Navbar = (props) => {
 
 
   return (
-    <nav className="flex justify-between bg-white p-5 text-black px-16 border-b-2 border-black">
+    <nav className="flex justify-between bg-white p-5 text-black px-8 md:px-16 border-b-2 border-black">
       {search ? (
         <div className='flex flex-grow justify-end'>
           <div className="flex flex-grow space-x-5 items-center">
@@ -37,23 +37,30 @@ const Navbar = (props) => {
         StoreFront
         </Link>
         </h1>
+        <div className='hidden md:flex justify-between space-x-5'>
+            <Link href="/products">
+              {/* <a className="flex items-center"> */}
+              MEN
+              {/* </a>/ */}
+            </Link>
+            <Link href="/products">
+              {/* <a className="flex items-center"> */}
+              WOMEN
+              {/* </a>/ */}
+            </Link>
 
-        <Link href="/products">
-          {/* <a className="flex items-center"> */}
-          MEN
-          {/* </a>/ */}
-        </Link>
-        <Link href="/products">
-          {/* <a className="flex items-center"> */}
-          WOMEN
-          {/* </a>/ */}
-        </Link>
+        </div>
+
+      
       </div>
       {/* Icons */}
-      <div className="flex items-center space-x-12 ">
+      <div className="flex items-center space-x-12">
         <button className="p-2" onClick={() => setSearch(true)}>
             <FaSearch className="mr-2" size={24} />
         </button>
+        <section className="hidden md:flex space-x-12">
+
+
         <Link href="/shoppingCart">
           {/* <a className="flex items-center mr-4"> */}
             <FaShoppingCart className="mr-2" size={24} /> 
@@ -74,6 +81,7 @@ const Navbar = (props) => {
             <FaBook className="mr-2"size={24} /> 
           {/* </a> */}
         </Link>
+        </section>
       </div>
       </>
       )}
