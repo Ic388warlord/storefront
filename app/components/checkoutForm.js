@@ -58,7 +58,8 @@ export default function CheckoutForm({items, productCounts}) {
     const { error, paymentIntent } = await stripe.confirmPayment({
       elements,
       confirmParams: {
-        return_url: "http://localhost:3000/shoppingCart/checkout", //change it to actual link
+        return_url: "http://storefront-ebs-env.eba-ztgpx9h9.us-west-2.elasticbeanstalk.com/shoppingCart/checkout",
+        // return_url: "http://localhost:3000/shoppingCart/checkout", //change it to actual link
       },
       redirect: "if_required"
     });
