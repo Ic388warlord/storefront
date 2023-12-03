@@ -18,8 +18,12 @@ const ShoppingCartCard = ({ product, onRemove, updateItemCount }) => {
 
     const handleUpdateItemCount = async (product_id, product_price, operation) => {
         try {
-            await API.updateItemCount(product_id, operation);
-    
+            if (operation === "decrement" && localCount == 1) {
+                return null;
+            } else {
+                await API.updateItemCount(product_id, operation);
+            }
+            
             // Use the updater function to ensure correct state updates
             setLocalCount(prevCount => {
                 const newCount = operation === 'increment' ? prevCount + 1 : (prevCount > 1 ? prevCount - 1 : 1);
