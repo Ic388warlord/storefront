@@ -18,7 +18,7 @@ const [activeSlide, setActiveSlide] = useState(0);
     setActiveSlide(index);
   };
   return (
-    <section className="w-full h-[900px] flex flex-col"
+    <section className="w-full h-screen flex flex-col"
     >
         {/* <NavBar /> */}
         <div className="relative h-full">
@@ -30,7 +30,7 @@ const [activeSlide, setActiveSlide] = useState(0);
             }`}
             style={{
               backgroundImage: `url("${item}")`,
-              backgroundPosition: 'center',
+              backgroundPosition: 'bottom 57% right 30%',
               backgroundSize: 'cover',
             }}
           >
