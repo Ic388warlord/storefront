@@ -77,7 +77,7 @@ const ChatBot = () => {
         onClick={() => setOpen(true)}
         className=""
         >
-            <FaCommentDots size={30} color='white' />
+            <FaCommentDots size={30} color='black' />
           </button>
             </div>
 
