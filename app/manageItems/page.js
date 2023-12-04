@@ -3,11 +3,12 @@ import React, { useEffect } from 'react'
 import API from '../utils/api';
 import { useState } from 'react'
 import Image from 'next/image';
-import { FaTimes, FaCheckCircle, FaEdit, FaPlus } from 'react-icons/fa'
+import { FaTimes, FaCheckCircle, FaEdit, FaPlus, FaSync } from 'react-icons/fa'
 import ClipLoader from "react-spinners/ClipLoader";
 import AddItemModal from '../components/addItemModal';
 import { useRouter } from 'next/navigation';
 import Cookies from 'js-cookie';
+import { FadeLoader } from 'react-spinners';
 ;
 
 const ManageItems = () => {
@@ -18,22 +19,19 @@ const ManageItems = () => {
 
     //  We can also try and see if they're admin to begin with
     useEffect(() => {
-        // if (Cookies.get('role') !== 'admin') {
-        //     alert('You are not an admin')
-        //     router.push('/profile')
-        // }
-
-        const fetchProducts = async () => {
-            setLoading(true);
-            const data = await API.getProducts();
-            setProducts(data);
-            setLoading(false);
-        }
         fetchProducts();
     }, []);
 
     const handleDelete = async (id) => {
         await API.deleteItem(id);
+        alert(`item ${id} deleted`);
+    }
+
+    const fetchProducts = async () => {
+        setLoading(true);
+        const data = await API.getProducts();
+        setProducts(data);
+        setLoading(false);
     }
 
 
@@ -50,12 +48,19 @@ const ManageItems = () => {
 
             <div className="flex justify-between">
             <p>Items:</p>
+            <div className='flex space-x-5'>
             <button className='flex'
                     onClick={() => setModal(true)}
                     >
                 Add Item {"    "} <FaPlus size={24} />  
             </button>
             <AddItemModal isOpen={modal} onClose={() => setModal(false)} />
+
+            <button onClick={fetchProducts}>
+                <FaSync size={24} />
+            </button>
+
+            </div>
 
 
 
@@ -80,24 +85,13 @@ const ManageItems = () => {
                 </p>
 
                 <div>
-                    <button className="p-2">
-                        <FaEdit size={24} color='lightBlue' />
-                    </button>
                     <button className="p-2" onClick={() => handleDelete(product.product_id)}>
-                        <FaTimes size={24} color='lightRed' />
+                        <FaTimes size={24} color='red' />
                         
-                    </button>
-                    <button className="p-2">
-                        <FaCheckCircle size={24}  color='lightGreen'/>
                     </button>
 
                 </div>
-
-
             </section>
-
-
-
                 ))
 
                 }

@@ -23,7 +23,10 @@ class API {
 
     static clearCookies() {
         Cookies.remove('token')
-        Cookies.remove('email')
+        Cookies.remove('userToken');
+        Cookies.remove('email');
+        Cookies.remove('admin');
+        Cookies.remove('role');
     }
 
     static getToken() {
@@ -46,13 +49,18 @@ class API {
         ));
         return products
     }
-    static async getEmail() {
+    static async getMe() {
+        const payload = {
+          userToken: Cookies.get("userToken")
+        }
+
         const query = await fetch(this.meUrl, {
-            method: 'GET',
+            method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': `Bearer ${Cookies.get('token')}`
+                'Authorization': Cookies.get('token')
             },
+            body: JSON.stringify(payload)
         })
         const data = await query.json()
         console.log(data);
@@ -76,8 +84,9 @@ class API {
         const data = await response.json();
         console.log("From API " + data.authToken);
         Cookies.set('token', data.authToken, { path: '/' });
+        Cookies.set('userToken', data.userToken, { path: '/' });
         Cookies.set('email', data.email, { path: '/' });
-        Cookies.set('admin', true, { path: '/' });
+        Cookies.set('admin', data.role === "ADMIN", { path: '/' });
         Cookies.set('role', data.role, { path: '/' });
         return data;
     }
@@ -118,13 +127,18 @@ class API {
 
     static async logOut () {
         const auth = Cookies.get('token');
+        const userToken = Cookies.get("userToken");
         const payload = {
-            "Authorization": `Bearer ${auth}`,
+            "Authorization": auth,
             'Content-Type': 'application/json'
         };
+        const body = {
+          userToken
+        };
         const response = await fetch(this.logoutUrl, {
-            method: 'GET',
-            headers: payload
+            method: 'POST',
+            headers: payload,
+            body: JSON.stringify(body)
         })
         const data = await response.json();
         console.log(data);
