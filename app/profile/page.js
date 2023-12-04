@@ -16,20 +16,34 @@ const Profile = () => {
 
 
     useEffect(() => {
-        const jwt = API.getToken();
-        if (!jwt) {
+
+        const whoAmI = async () => {
+          // const jwt = API.getToken();
+          // if (!jwt) {
+          //   router.replace('profile/login');
+          // } else {
+          //   setEmail(Cookies.get('email'));
+          //   // isAdmin(Cookies.get('admin'));
+          // }
+
+          try {
+            const data = await API.getMe();
+            isAdmin(data.role === "ADMIN");
+            setEmail(data.email);
+          } catch (error) {
+            console.error(error);
             router.replace('profile/login');
-        } else {
-            setEmail(Cookies.get('email'));
-            // isAdmin(Cookies.get('admin'));
+          }
         }
+
+        whoAmI();
+
     }, []);
 
     // Logout function
     const handleLogout = async () => {
         // Handle response
         setLogOut(true);
-        API.clearCookies();
         try {
             setLogOut(false);
             const data = await API.logOut();
@@ -38,6 +52,7 @@ const Profile = () => {
             console.error(error);
             router.replace('/profile/login');
         }
+        API.clearCookies();
 
     }
 
