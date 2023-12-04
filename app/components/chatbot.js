@@ -19,15 +19,21 @@ const ChatBot = () => {
     }
 
     useEffect(() => {
-        console.log(open);
         if (!chatRef) return;
         if (open && chatRef.current) {
+          chatRef.current.scrollTop = chatRef.current.scrollHeight;
+        }
+    }, [open]);
+
+    useEffect(() => {
+        if (!chatRef) return;
+        if (chatRef.current) {
             const lastMessage = chatRef.current.lastChild;
             if (lastMessage) {
                 lastMessage.scrollIntoView({ behavior: 'smooth' });
             }
         }
-    }, [open, messages]);
+    }, [messages]);
 
   return (
     <div className="fixed bottom-0 left-0 w-80 z-50">
